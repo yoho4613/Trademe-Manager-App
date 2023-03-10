@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { UserContext } from "../context/context";
 
-function Login() {
+function Login(props) {
   const [userId, setUserId] = useState();
   const [secret, setSecret] = useState("");
   const [auth, setAuth] = useState("");
@@ -13,6 +13,9 @@ function Login() {
 
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
+  let localUser;
+  let oauth_verifier
+  let oauth_token;
 
   useEffect(() => {
     if (auth) {
@@ -20,8 +23,37 @@ function Login() {
     }
   }, [auth]);
 
+  useEffect(() => {
+    oauth_verifier = router.query.oauth_verifier;
+    if (typeof window !== "undefined") {
+      // Perform localStorage action
+      localUser = JSON.parse(localStorage.getItem("user"));
+    }
+    if (oauth_verifier) {
+      localUser.verifier = oauth_verifier;
+      fetchUser(localUser)
+    }
+  }, [oauth_verifier]);
+
+  const fetchUser = async (user) => {
+    try {
+      const result = await axios
+        .post("/api/accessToken", user)
+        
+     
+      console.log(result.data)
+      localUser.oauth_token = result.data.slice(12, 44)
+      localUser.oauth_tokenSecret = result.data.slice(64, 96)
+      localStorage.setItem('user', JSON.stringify(localUser))
+      router.push('/')
+      return result;
+    } catch (error) {
+      console.log(error);
+      console.log("it is error from front");
+    }
+  }; 
+
   const sendToken = async () => {
-    console.log(auth)
     const data = {
       consumer: userId,
       consumerSecret: secret,
@@ -31,9 +63,8 @@ function Login() {
     localStorage.setItem("user", JSON.stringify(data));
     await setUser({
       ...user,
-      ...data
+      ...data,
     });
-
     router.push(
       `https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=${data.token}`
     );
@@ -124,3 +155,8 @@ function Login() {
 }
 
 export default Login;
+
+export async function getServerSideProps(context) {
+  const { query } = await context;
+  return { props: { query } };
+}

@@ -1,5 +1,4 @@
 import Context from "../context/context";
-import {  useEffect, useState } from "react";
 import { Navbar } from "../components";
 
 import "../styles/globals.css";

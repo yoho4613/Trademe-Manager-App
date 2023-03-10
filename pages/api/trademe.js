@@ -8,9 +8,6 @@ export default async function handler(req, res) {
       url: "https://secure.tmsandbox.co.nz/Oauth/RequestToken",
       params: {
         scope: "MyTradeMeRead,MyTradeMeWrite",
-        fromCurrency: "USD",
-        toCurrency: "HRK",
-        amount: "40",
       },
       headers: {
         Authorization: `OAuth 0auth_callback=https://developer.trademe.co.nz/,oauth_consumer_key=${consumer},oauth_signature_method=PLAINTEXT,oauth_signature=${secret}&`,
