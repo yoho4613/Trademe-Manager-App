@@ -4,6 +4,8 @@ export const UserContext = createContext(null);
 
 function Context({ children }) {
   const [user, setUser] = useState({
+    consumer: "",
+    consumerSecret: "",
     token: "",
     tokenSecret: "",
     verifier: "",

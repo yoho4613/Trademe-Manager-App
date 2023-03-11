@@ -6,67 +6,69 @@ import Link from "next/link";
 import { UserContext } from "../context/context";
 
 function Login(props) {
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState("");
   const [secret, setSecret] = useState("");
-  const [auth, setAuth] = useState("");
   const [isWrong, setIsWrong] = useState(false);
 
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
   let localUser;
-  let oauth_verifier
-  let oauth_token;
+  let oauth_verifier;
 
   useEffect(() => {
-    if (auth) {
-      sendToken();
+    if (user.token) {
+      if (!user.verifier) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(user)
+        );
+        sendToken(user.token);
+      }
     }
-  }, [auth]);
+  }, [user.token]);
 
   useEffect(() => {
-    oauth_verifier = router.query.oauth_verifier;
     if (typeof window !== "undefined") {
       // Perform localStorage action
       localUser = JSON.parse(localStorage.getItem("user"));
+      oauth_verifier = router.query.oauth_verifier;
+      setUser({
+        ...localUser,
+        verifier: oauth_verifier,
+      });
+      if (user.verifier) {
+        fetchUser(user);
+      }
     }
-    if (oauth_verifier) {
-      localUser.verifier = oauth_verifier;
-      fetchUser(localUser)
-    }
-  }, [oauth_verifier]);
+  }, [router.query.oauth_verifier, user.verifier]);
+
+  useEffect(() => {
+  }, [user.token]);
 
   const fetchUser = async (user) => {
     try {
-      const result = await axios
-        .post("/api/accessToken", user)
-        
-     
-      console.log(result.data)
-      localUser.oauth_token = result.data.slice(12, 44)
-      localUser.oauth_tokenSecret = result.data.slice(64, 96)
-      localStorage.setItem('user', JSON.stringify(localUser))
-      router.push('/')
+      const result = await axios.post("/api/accessToken", user);
+
+      localUser.oauth_token = result.data.slice(12, 44);
+      localUser.oauth_tokenSecret = result.data.slice(64, 96);
+      localStorage.setItem("user", JSON.stringify({
+        oauth_token: localUser.oauth_token,
+        token_secret: localUser.oauth_tokenSecret
+      }));
+      router.push("/");
       return result;
     } catch (error) {
       console.log(error);
       console.log("it is error from front");
+      router.push("/login");
     }
-  }; 
+  };
 
-  const sendToken = async () => {
-    const data = {
-      consumer: userId,
-      consumerSecret: secret,
-      token: auth.slice(12, 44),
-      tokenSecret: auth.slice(64, 96),
-    };
-    localStorage.setItem("user", JSON.stringify(data));
-    await setUser({
-      ...user,
-      ...data,
-    });
+  const sendToken = async (token) => {
+    localStorage.setItem("user", JSON.stringify(user));
+
     router.push(
-      `https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=${data.token}`
+      `https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=${token}`
     );
   };
 
@@ -84,7 +86,14 @@ function Login(props) {
         })
         .then((res) => res.data.result);
 
-      return result ? setAuth(result) : setIsWrong(true);
+      result
+        ? await setUser({
+            consumer: consumer,
+            consumerSecret: secret,
+            token: result.slice(12, 44),
+            tokenSecret: result.slice(64, 96),
+          })
+        : setIsWrong(true);
     } catch (error) {
       console.log(error);
       console.log("it is error");
