@@ -15,6 +15,8 @@ function Login(props) {
   const router = useRouter();
   let localUser;
   let oauth_verifier;
+
+  
   useEffect(() => {
     if (user.token) {
       if (!user.verifier) {
