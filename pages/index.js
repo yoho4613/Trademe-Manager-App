@@ -4,12 +4,15 @@ import { useState, useEffect, useContext } from "react";
 import { Landing } from "../components";
 import { UserContext } from "../context/context";
 
-
 export default function Home(props) {
   const { user, setUser } = useContext(UserContext);
 
   const router = useRouter();
-  
+  useEffect(() => {
+    if(localStorage.key('user')) {
+      setUser(JSON.parse(localStorage.getItem('user')))
+    }
+  }, []);
 
   return (
     <div>
@@ -20,8 +23,7 @@ export default function Home(props) {
       <p>tokenSecret-{user ? user.tokenSecret : "...fetching"}</p>
       <p>verifier-{user ? user.verifier : "...fetching"}</p>
       <p>oauthToken-{user ? user.oauth_token : "...fetching"}</p>
-      <p>OauthSecret-{user ? user.oauth_tokenSecret : "...fetching"}</p>
-
+      <p>OauthSecret-{user ? user.token_secret : "...fetching"}</p>
       <Landing />
       <button onClick={() => loadUser()}>Login</button>
     </div>

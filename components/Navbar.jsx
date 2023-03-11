@@ -22,23 +22,14 @@ function classNames(...classes) {
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  let savedUser;
-  useEffect(() => {
-    savedUser = JSON.parse(localStorage.getItem("user")) || {};
-    if (savedUser.token && savedUser.tokenSecret) {
-      setUser(savedUser);
-      setIsAuth(true);
-    }
-  }, []);
+
   const router = useRouter();
 
   useEffect(() => {
-    if (user.token && user.tokenSecret) {
+    if (user.oauth_token && user.token_secret) {
       setIsAuth(true);
-    } else {
-      false;
-    }
-  }, [user.token, user.tokenSecret]);
+    } 
+  }, [user.oauth_token]);
 
 
 

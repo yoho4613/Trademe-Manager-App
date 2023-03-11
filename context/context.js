@@ -9,6 +9,8 @@ function Context({ children }) {
     token: "",
     tokenSecret: "",
     verifier: "",
+    oauth_token: "",
+    token_secret: ""
   });
 
   return (

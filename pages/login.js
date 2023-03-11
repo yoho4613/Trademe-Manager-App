@@ -11,17 +11,14 @@ function Login(props) {
   const [isWrong, setIsWrong] = useState(false);
 
   const { user, setUser } = useContext(UserContext);
+
   const router = useRouter();
   let localUser;
   let oauth_verifier;
-
   useEffect(() => {
     if (user.token) {
       if (!user.verifier) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(user)
-        );
+        localStorage.setItem("user", JSON.stringify(user));
         sendToken(user.token);
       }
     }
@@ -31,30 +28,33 @@ function Login(props) {
     if (typeof window !== "undefined") {
       // Perform localStorage action
       localUser = JSON.parse(localStorage.getItem("user"));
-      oauth_verifier = router.query.oauth_verifier;
-      setUser({
-        ...localUser,
-        verifier: oauth_verifier,
-      });
+      if (router.query.oauth_verifier) {
+        oauth_verifier = router.query.oauth_verifier;
+        setUser({
+          ...localUser,
+          verifier: oauth_verifier,
+        });
+      }
       if (user.verifier) {
         fetchUser(user);
       }
     }
   }, [router.query.oauth_verifier, user.verifier]);
 
-  useEffect(() => {
-  }, [user.token]);
-
   const fetchUser = async (user) => {
     try {
       const result = await axios.post("/api/accessToken", user);
 
-      localUser.oauth_token = result.data.slice(12, 44);
-      localUser.oauth_tokenSecret = result.data.slice(64, 96);
-      localStorage.setItem("user", JSON.stringify({
-        oauth_token: localUser.oauth_token,
-        token_secret: localUser.oauth_tokenSecret
-      }));
+      const oauth_token = result.data.slice(12, 44);
+      const oauth_tokenSecret = result.data.slice(64, 96);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          oauth_token: oauth_token,
+          token_secret: oauth_tokenSecret,
+        })
+      );
       router.push("/");
       return result;
     } catch (error) {
@@ -88,6 +88,7 @@ function Login(props) {
 
       result
         ? await setUser({
+            ...user,
             consumer: consumer,
             consumerSecret: secret,
             token: result.slice(12, 44),
