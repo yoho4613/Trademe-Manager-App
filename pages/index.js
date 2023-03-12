@@ -55,16 +55,8 @@ export default function Home(props) {
 
   return (
     <div>
-      Hello Trademe
-      <h1>User Name</h1>
-      <p>Your Credencial</p>
-      <p>token-{user ? user.token : "...fetching"}</p>
-      <p>tokenSecret-{user ? user.tokenSecret : "...fetching"}</p>
-      <p>verifier-{user ? user.verifier : "...fetching"}</p>
-      <p>oauthToken-{user ? user.oauth_token : "...fetching"}</p>
-      <p>OauthSecret-{user ? user.token_secret : "...fetching"}</p>
       <Landing />
-      <button onClick={() => loadUser()}>Login</button>
+
     </div>
   );
 }
