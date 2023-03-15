@@ -1,11 +1,12 @@
 import axios from "axios";
+import { BASE_URL_SECURE } from "/config";
 
 export default async function handler(req, res) {
   try {
     const { consumer, secret } = req.body;
     const options = {
       method: "POST",
-      url: "https://secure.tmsandbox.co.nz/Oauth/RequestToken",
+      url: `${BASE_URL_SECURE}/Oauth/RequestToken`,
       params: {
         scope: "MyTradeMeRead,MyTradeMeWrite",
       },
@@ -18,12 +19,10 @@ export default async function handler(req, res) {
       .request(options)
       .then((response) => response.data)
       .catch((error) => console.error(error));
-    
+
     res.status(200).json({ result });
   } catch (error) {
     console.log(error.message);
     console.log("it is error");
   }
 }
-
-

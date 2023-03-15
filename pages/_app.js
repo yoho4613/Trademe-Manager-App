@@ -6,8 +6,8 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Context>
-        <Navbar />
+      <Context >
+        <Navbar  />
         <Component {...pageProps} />
       </Context>
     </>
