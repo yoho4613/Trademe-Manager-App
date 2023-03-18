@@ -26,7 +26,7 @@ const Navbar = () => {
 
   useEffect(() => {
     navigation.find((el) => el.current).current = false;
-    const findMenu = navigation.find((el) => router.pathname.includes(el.href));
+    const findMenu = navigation.find((el) => router.pathname.includes(el.slug));
     findMenu ? (findMenu.current = true) : null;
   }, []);
 

@@ -3,14 +3,15 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useStateContext } from "../context/StateContext";
+import Spinner from "./Spinner";
 
 const Layout = ({ children }) => {
-  const { user, setUser } = useStateContext();
+  const { setUser, isLoading } = useStateContext();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
-        setUser(JSON.parse(localStorage.getItem('user')));
+        setUser(JSON.parse(localStorage.getItem("user")));
       }
     }
   }, []);
@@ -23,7 +24,10 @@ const Layout = ({ children }) => {
       <header>
         <Navbar />
       </header>
-      <main className="main-container">{children}</main>
+      <main className="main-container relative min-w-screen min-h-screen">
+        <Spinner loading={isLoading} />
+        {children}
+      </main>
       <footer>
         <Footer />
       </footer>

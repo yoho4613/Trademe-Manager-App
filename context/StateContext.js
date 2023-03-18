@@ -1,10 +1,11 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
-import { BASE_URL } from "../constant/config";
 
 const UserContext = createContext();
 
 export const StateContext = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [user, setUser] = useState({
     consumer: "",
     consumerSecret: "",
@@ -27,7 +28,7 @@ export const StateContext = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchData }}>
+    <UserContext.Provider value={{ user, setUser, fetchData, isLoading, setIsLoading }}>
       {children}
     </UserContext.Provider>
   );
