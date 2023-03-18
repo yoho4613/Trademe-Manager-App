@@ -1,36 +1,40 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
-import Image from "next/image";
-import assets from "../assets";
-import { UserContext } from "../context/context";
-
+import React, { useState, useEffect, Fragment } from "react";
+import { useStateContext } from "../context/StateContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { useRouter } from "next/router";
-
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
+import Link from "next/link";
+import Image from "next/image";
+import assets from "../assets";
+import { BASE_PAGE_SLUG } from "../constant/config";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+export const navigation = [
+  {slug: "list", name: "List an Item", href: `${BASE_PAGE_SLUG}/list`, current: false },
+  {slug: "selling", name: "Items I'm Selling", href: `${BASE_PAGE_SLUG}/selling`, current: true },
+  {slug: "watchlist", name: "Watchlist", href: `${BASE_PAGE_SLUG}/watchlist`, current: false },
+  {slug: "sold", name: "Sold Item", href: `${BASE_PAGE_SLUG}/sold`, current: false },
+];
+
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-
+  const { user, setUser} = useStateContext();
   const router = useRouter();
 
   useEffect(() => {
-    console.log(user)
+    navigation.find((el) => el.current).current = false;
+    const findMenu = navigation.find((el) => router.pathname.includes(el.href));
+    findMenu ? (findMenu.current = true) : null;
+  }, []);
+
+  useEffect(() => {
     if (user.oauth_token && user.token_secret) {
       setIsAuth(true);
     } else {
-      setIsAuth(false)
+      setIsAuth(false);
     }
   }, [user.oauth_token]);
 
@@ -42,6 +46,7 @@ const Navbar = () => {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
+
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -61,11 +66,11 @@ const Navbar = () => {
                     />
                   </Link>
                   <Link href="/">
-                  <Image
-                    className="hidden h-8 w-auto lg:block"
-                    src={assets.mainLogo}
-                    alt="Your Company"
-                  />
+                    <Image
+                      className="hidden h-8 w-auto lg:block"
+                      src={assets.mainLogo}
+                      alt="Your Company"
+                    />
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -198,6 +203,7 @@ const Navbar = () => {
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
+                  onClick={(item) => (item.current = true)}
                 >
                   {item.name}
                 </Disclosure.Button>

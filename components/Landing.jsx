@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../context/context";
+import { useStateContext } from "../context/StateContext";
 
 const Landing = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useStateContext();
 
-  
   return (
     <div>
       <h1>Landing page</h1>

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Landing } from "../components";
 import Watchlist from "../components/Watchlist";
-import { UserContext } from "../context/context";
+import { useStateContext } from "../context/StateContext";
 
 export default function Home(props) {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useStateContext();
 
   const router = useRouter();
 
@@ -49,18 +49,17 @@ export default function Home(props) {
   }, []);
 
   useEffect(() => {
-    if (localStorage.key("user")) {
-      setUser(JSON.parse(localStorage.getItem("user")));
-      console.log(user)
+    if (typeof window !== "undefined") {
+      if (JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
+        setUser(JSON.parse(localStorage.getItem('user')));
+      }
     }
-  }, [user.oauth_token]);
+  }, []);
 
  
   return (
     <div>
       {user?.oauth_token && <Watchlist user={user}/>}
-      
-      
     </div>
   );
 }

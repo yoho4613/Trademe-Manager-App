@@ -1,31 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL } from "../config";
-import { UserContext } from "../context/context";
+import React, { useEffect, useState } from "react";
+import { useStateContext } from "../context/StateContext";
 
-const Watchlist = ({ user }) => {
-  // const {user, setUser } = useContext(UserContext)
-  const [watchlist, setWatchlist] = useState([]);
-  console.log(user)
+
+const Watchlist = () => {
+  const {user, fetchData } = useStateContext()
+  const [watchlist, setWatchlist] = useState({});
+
 
   useEffect(() => {
-    // setWatchlist(() => getWatchlist(user));
     
+    
+  // getWatchlist(user)
+  fetchData("/MyTradeMe/Watchlist/All.json", user, setWatchlist)
 
-      const watch = getWatchlist(user).then((res) => console.log(res));
-    
-  
   }, []);
 
-  const getWatchlist = async (user) => {
-    const result = await axios.post("/api/mytrademe", {
-      url: "/MyTradeMe/Watchlist/All.json",
-      ...user,
-    });
-    return result.data;
-  };
-
-  return <div>{watchlist ? <p>{watchlist}</p> : "loading..."}</div>;
+  return <div>{watchlist ? <p>{watchlist.Page}</p> : "loading..."}</div>;
 };
 
 export default Watchlist;

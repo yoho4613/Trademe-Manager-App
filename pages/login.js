@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useContext } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { UserContext } from "../context/context";
+import { useStateContext } from "../context/StateContext";
 
 function Login(props) {
   const [userId, setUserId] = useState("");
   const [secret, setSecret] = useState("");
   const [isWrong, setIsWrong] = useState(false);
 
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useStateContext();
 
   const router = useRouter();
   let localUser;
   let oauth_verifier;
 
-  
+  useEffect(() => {
+    if(user.oauth_token && user.token_secret) {
+      router.push('/')
+    }
+  }, [])
+
   useEffect(() => {
     if (user.token) {
       if (!user.verifier) {

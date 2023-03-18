@@ -1,11 +1,10 @@
 import axios from "axios";
-import { BASE_URL } from "../../config";
+import { BASE_URL } from "../../constant/config";
 import crypto from 'crypto'
 
 export default async function handler(req, res) {
-  console.log(req.body);
+
   try {
- 
     const consumerKey = req.body.consumer;
     const oauthToken = req.body.oauth_token;
     const consumerSecret = req.body.consumerSecret;
@@ -57,7 +56,7 @@ export default async function handler(req, res) {
       .concat(`oauth_signature="${encodeURIComponent(oauthSignature)}"`)
       .join(", ")}`;
 
-      console.log(options)
+
     const result = await axios
       .request(options)
       .then((res) => res)

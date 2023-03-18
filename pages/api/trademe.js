@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL_SECURE } from "/config";
+import { BASE_URL_SECURE } from "../../constant/config";
 
 export default async function handler(req, res) {
   try {
