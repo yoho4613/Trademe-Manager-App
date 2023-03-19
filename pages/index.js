@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { Landing } from "../components";
+
 import Watchlist from "../components/Watchlist";
 import { useStateContext } from "../context/StateContext";
 

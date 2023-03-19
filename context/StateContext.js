@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
+import { BASE_PAGE_SLUG } from "../constant/config";
 
 const UserContext = createContext();
 
@@ -17,6 +18,7 @@ export const StateContext = ({ children }) => {
   });
 
   const fetchData = async (url, user, parse) => {
+    setIsLoading((loading) => !loading);
     const result = await axios.post("/api/mytrademe", {
       url: url,
       ...user,
@@ -24,11 +26,14 @@ export const StateContext = ({ children }) => {
 
     parse(result.data);
     console.log(result.data);
+    setIsLoading((loading) => !loading);
     return result.data;
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchData, isLoading, setIsLoading }}>
+    <UserContext.Provider
+      value={{ user, setUser, fetchData, isLoading, setIsLoading }}
+    >
       {children}
     </UserContext.Provider>
   );

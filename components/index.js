@@ -3,8 +3,8 @@ import Landing from "./Landing";
 import Layout from "./Layout";
 import SellingProducts from "./SellingProducts";
 import Watchlist from "./Watchlist";
-import Table from "./Table";
+import TableDetail from "./TableDetail";
 import Spinner from "./Spinner";
 
 
-export { Navbar, Landing, Layout, SellingProducts, Watchlist, Table, Spinner };
+export { Navbar, Landing, Layout, SellingProducts, Watchlist, TableDetail, Spinner };

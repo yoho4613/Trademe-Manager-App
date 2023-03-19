@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import assets from "../assets";
-import { BASE_PAGE_SLUG } from "../constant/config";
+import { BASE_PAGE_SLUG, menu } from "../constant/config";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -19,9 +19,37 @@ export const navigation = [
   {slug: "sold", name: "Sold Item", href: `${BASE_PAGE_SLUG}/sold`, current: false },
 ];
 
+// export const navigation = [...menu]
+
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const { user, setUser} = useStateContext();
+  // const [navigation, setNavigation] = useState([
+  //   {
+  //     slug: "list",
+  //     name: "List an Item",
+  //     href: `${BASE_PAGE_SLUG}/list`,
+  //     current: false,
+  //   },
+  //   {
+  //     slug: "selling",
+  //     name: "Items I'm Selling",
+  //     href: `${BASE_PAGE_SLUG}/selling`,
+  //     current: true,
+  //   },
+  //   {
+  //     slug: "watchlist",
+  //     name: "Watchlist",
+  //     href: `${BASE_PAGE_SLUG}/watchlist`,
+  //     current: false,
+  //   },
+  //   {
+  //     slug: "sold",
+  //     name: "Sold Item",
+  //     href: `${BASE_PAGE_SLUG}/sold`,
+  //     current: false,
+  //   },
+  // ]);
+  const { user, setUser } = useStateContext();
   const router = useRouter();
 
   useEffect(() => {
