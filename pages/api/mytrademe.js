@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     const result = await axios
       .request(options)
       .then((res) => res)
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
 
     res.status(200).json(result.data);
   } catch (error) {
@@ -68,3 +68,4 @@ export default async function handler(req, res) {
     console.log("it is error by server");
   }
 }
+

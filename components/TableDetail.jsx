@@ -1,29 +1,84 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/StateContext";
-import Watchlist from "./Watchlist";
 
-
-const TableDetail = ({ category: category, url: url }) => {
-  const { user, fetchData } = useStateContext();
+const TableDetail = ({ category: category, data: data, url: url }) => {
+  const { List: lists } = data;
+  const { setIsLoading, removeWatchlist, user, fetchData } = useStateContext();
   const [search, setSearch] = useState("");
-  const [data, setData] = useState({});
+  const [list, setList] = useState(lists);
+  const [isSelected, setIsSelected] = useState([]);
 
-
+  //Only for Checking List Data
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   useEffect(() => {
-    // fetchData(url, user, setData)
-  }, [search])
+    if (!data) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+      setList(lists?.map((el) => ({ ...el, isSelected: false })));
+    }
+  }, [data]);
 
-  
+  useEffect(() => {
+    if (list) {
+      setList(() =>
+        lists.filter((item) =>
+          item.Title.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search]);
 
-  
+  useEffect(() => {
+    setIsSelected(() => list?.filter((item) => item.isSelected));
+  }, [list]);
 
+  const handleSelect = (item) => {
+    setList((list) =>
+      list.map((el) =>
+        el.ListingId === item.ListingId
+          ? { ...el, isSelected: !item.isSelected }
+          : el
+      )
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setList((list) => list.map((item) => ({ ...item, isSelected: true })));
+    } else {
+      setList((list) => list.map((item) => ({ ...item, isSelected: false })));
+    }
+  };
+
+  const handleEdit = (item) => {};
+  const handleDelete = async (item) => {
+    await removeWatchlist(`/MyTradeMe/WatchList/${item.ListingId}.json`, user);
+    await fetchData(url, user, setList).then((res) =>
+      setList(res.List.map((el) => ({ ...el, isSelected: false })))
+    );
+  };
+
+  const handleDeleteAll = () => {
+    isSelected.forEach(async (item) => {
+      await removeWatchlist(
+        `/MyTradeMe/WatchList/${item.ListingId}.json`,
+        user
+      );
+    });
+    fetchData(url, user, setList).then((res) =>
+      setList(res.List.map((el) => ({ ...el, isSelected: false })))
+    );
+  };
 
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="flex items-center justify-between pb-4">
-          
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -51,6 +106,13 @@ const TableDetail = ({ category: category, url: url }) => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+          <button
+            href="#"
+            onClick={() => handleDeleteAll()}
+            className="font-medium  text-neutral-100 dark:text-neutral-500 hover:underline bg-rose-700 px-4 py-2 rounded"
+          >
+            Delete
+          </button>
         </div>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -60,6 +122,7 @@ const TableDetail = ({ category: category, url: url }) => {
                   <input
                     id="checkbox-all-search"
                     type="checkbox"
+                    onChange={(e) => handleSelectAll(e)}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label htmlFor="checkbox-all-search" className="sr-only">
@@ -67,91 +130,128 @@ const TableDetail = ({ category: category, url: url }) => {
                   </label>
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Product name
               </th>
-              <th scope="col" className="px-6 py-3">
-                Color
+              <th scope="col" className="px-2 py-3">
+                Start
               </th>
-              <th scope="col" className="px-6 py-3">
-                Category
+              <th scope="col" className="px-2 py-3">
+                End
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Price
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
+                Picture
+              </th>
+              <th scope="col" className="px-2 py-2">
+                React
+              </th>
+              <th scope="col" className="px-2 py-2">
+                View
+              </th>
+              <th scope="col" className="px-2 py-3">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
+            {list &&
+              (list.length ? (
+                list.map((item, i) => (
+                  <tr
+                    key={i}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
+                    <td className="w-4 p-4">
+                      <div className="flex items-center">
+                        <input
+                          id="checkbox-table-search-1"
+                          type="checkbox"
+                          checked={item.isSelected}
+                          onChange={() => handleSelect(item)}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
+                        <label
+                          htmlFor="checkbox-table-search-1"
+                          className="sr-only"
+                        >
+                          checkbox
+                        </label>
+                      </div>
+                    </td>
+                    <th
+                      scope="row"
+                      className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {item.Title}
+                    </th>
 
+                    <td className="px-2 py-4">
+                      {`${new Date(
+                        Number(item.StartDate.replace(/\D/g, ""))
+                      ).toLocaleString("en-GB", {
+                        year: "2-digit",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })} ${new Date(
+                        Number(item.EndDate.replace(/\D/g, ""))
+                      ).toLocaleTimeString("en-GB", { hour12: false })}`}
+                    </td>
+                    <td className="px-2 py-4">
+                      {`${new Date(
+                        Number(item.EndDate.replace(/\D/g, ""))
+                      ).toLocaleString("en-GB", {
+                        year: "2-digit",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })} ${new Date(
+                        Number(item.EndDate.replace(/\D/g, ""))
+                      ).toLocaleTimeString("en-GB", { hour12: false })}`}
+                    </td>
+                    <td className="px-2 py-4">{item.PriceDisplay}</td>
+                    <td className="px-2 py-4">
+                      {item.PictureHref ? (
+                        <img src={item.PictureHref} />
+                      ) : (
+                        "No Image"
+                      )}
+                    </td>
+                    <td className="px-2 py-2  text-green-500  font-bold">
+                      {item.BidderAndWatchers ? item.BidderAndWatchers : 0}
+                    </td>
+                    <td className="px-2 py-2">
+                      {item.ViewCount ? item.ViewCount : 0}
+                    </td>
 
-
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-2"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-2" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
-              <td className="px-6 py-4">$1999</td>
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-           
-            
+                    <td className="px-2 py-4">
+                      {category !== "watchlist" && (
+                        <Link
+                          href={`/details/${category}?listId=${item.ListingId}`}
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          // onClick={() => handleEdit(item)}
+                        >
+                          Edit
+                        </Link>
+                      )}
+                      {`  `}
+                      <button
+                        onClick={() => handleDelete(item)}
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="px-2 py-4 content-center">
+                    There's no Data...
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -10,9 +10,9 @@ const Watchlist = () => {
   useEffect(() => {
     
     
-  // getWatchlist(user)
-  fetchData("/MyTradeMe/Watchlist/All.json", user, setWatchlist)
 
+  const data = fetchData("/MyTradeMe/Watchlist/All.json", user, setWatchlist)
+console.log(data)
   }, []);
 
   return <div>{watchlist ? <p>{watchlist.Page}</p> : "loading..."}</div>;
