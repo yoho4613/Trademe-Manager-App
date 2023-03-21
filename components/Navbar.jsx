@@ -45,6 +45,7 @@ const Navbar = () => {
 
   useEffect(() => {
     navigation.find((el) => el.current).current = false;
+    // navigation.map((el) => ({...el, isSelected: false}))
 
     if (router.query.slug) {
       if (navigation.find((el) => el.slug === router.query.slug)) {
@@ -52,7 +53,8 @@ const Navbar = () => {
       } else {
         router.push("/");
       }
-    }
+    } 
+    
   }, []);
 
   useEffect(() => {

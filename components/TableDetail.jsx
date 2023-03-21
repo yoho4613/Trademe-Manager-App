@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/StateContext";
@@ -8,6 +9,7 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
   const [search, setSearch] = useState("");
   const [list, setList] = useState(lists);
   const [isSelected, setIsSelected] = useState([]);
+  const [response, setResponse] = useState({});
 
   //Only for Checking List Data
   useEffect(() => {
@@ -55,12 +57,29 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
     }
   };
 
-  const handleEdit = (item) => {};
   const handleDelete = async (item) => {
-    await removeWatchlist(`/MyTradeMe/WatchList/${item.ListingId}.json`, user);
-    await fetchData(url, user, setList).then((res) =>
-      setList(res.List.map((el) => ({ ...el, isSelected: false })))
-    );
+    if (category === "watchlist") {
+      await removeWatchlist(
+        `/MyTradeMe/WatchList/${item.ListingId}.json`,
+        user
+      );
+      await fetchData(url, user, setList).then((res) =>
+        setList(res.List.map((el) => ({ ...el, isSelected: false })))
+      );
+    } else if (category === "selling") {
+      console.log("delete")
+      await axios
+        .post("/api/withdrawListing", {
+          url: "https://api.trademe.co.nz/v1/Selling/Withdraw.json",
+          user: user,
+          method: "POST",
+          body: {
+            ListingId: item.ListingId,
+            Type: 2,
+          },
+        })
+        .then((res) => console.log(res));
+    }
   };
 
   const handleDeleteAll = () => {
@@ -226,7 +245,15 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                     </td>
 
                     <td className="px-2 py-4">
-                      {category !== "watchlist" && (
+                      {category === "watchlist" ? (
+                        <Link
+                          href={`/details/${category}?listId=${item.ListingId}`}
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          // onClick={() => handleEdit(item)}
+                        >
+                          Detail
+                        </Link>
+                      ) : (
                         <Link
                           href={`/details/${category}?listId=${item.ListingId}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"

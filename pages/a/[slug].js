@@ -19,7 +19,6 @@ const MenuPage = ({ params }) => {
   useEffect(() => {
     if (user.token_secret) {
       fetchData(nav.url, user, setData);
-      console.log(nav.url)
     }
 
   }, [user.token_secret]);

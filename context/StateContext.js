@@ -25,6 +25,7 @@ export const StateContext = ({ children }) => {
         url: url,
         ...user,
       });
+
       if (parse) {
         parse(result.data);
       }
