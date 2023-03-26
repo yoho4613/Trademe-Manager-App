@@ -9,6 +9,7 @@ const MenuPage = ({ params }) => {
   const [nav, setNav] = useState(navigation.find((menu) => menu.current));
   const [data, setData] = useState({});
   const router = useRouter()
+  
 
   useEffect(() => {
     if(!localStorage.key('user')) {
@@ -18,13 +19,13 @@ const MenuPage = ({ params }) => {
 
   useEffect(() => {
     if (user.token_secret) {
-      fetchData(nav.url, user, setData);
+      fetchData(nav?.url, user, setData);
     }
 
-  }, [user.token_secret]);
+  }, [user.token_secret, nav]);
 
   useEffect(() => {
-    setNav(navigation.find((menu) => menu.current));
+    setNav(navigation.find((menu) => menu.current) || navigation.find((menu) => menu.slug === router.query.slug));
 
   }, [navigation]);
 
@@ -33,14 +34,14 @@ const MenuPage = ({ params }) => {
       <Spinner />
       <h2 className="mt-0 mb-2 text-4xl font-medium leading-tight text-primary"></h2>
       <h1 className=" sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight mb-12">
-        {nav.name}
+        {nav?.name}
         <br />
         <span className="text-blue-600" style={{ fontSize: "70%" }}>
           for your business
         </span>
       </h1>
 
-      <TableDetail category={params} data={data} url={nav.url} />
+      <TableDetail category={params} data={data} url={nav?.url} />
     </div>
   );
 };

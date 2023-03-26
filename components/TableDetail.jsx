@@ -1,6 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useStateContext } from "../context/StateContext";
 
 const TableDetail = ({ category: category, data: data, url: url }) => {
@@ -63,11 +64,16 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
         `/MyTradeMe/WatchList/${item.ListingId}.json`,
         user
       );
-      await fetchData(url, user, setList).then((res) =>
-        setList(res.List.map((el) => ({ ...el, isSelected: false })))
-      );
+      await fetchData(url, user, setList)
+        .then((res) => {
+          setList(res.List.map((el) => ({ ...el, isSelected: false })));
+          toast.success("Listing successfully Deleted!");
+        })
+        .catch((err) =>
+          toast.warning(`There was a problem with delete Info: ${err.message}`)
+        );
     } else if (category === "selling") {
-      console.log("delete")
+      console.log("delete");
       await axios
         .post("/api/withdrawListing", {
           url: "https://api.trademe.co.nz/v1/Selling/Withdraw.json",
@@ -84,10 +90,11 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
 
   const handleDeleteAll = () => {
     isSelected.forEach(async (item) => {
-      await removeWatchlist(
-        `/MyTradeMe/WatchList/${item.ListingId}.json`,
-        user
-      );
+      await removeWatchlist(`/MyTradeMe/WatchList/${item.ListingId}.json`, user)
+        .then((res) => toast.success("Listing successfully Deleted!"))
+        .catch((err) =>
+          toast.warning(`There was a problem with delete Info: ${err.message}`)
+        );
     });
     fetchData(url, user, setList).then((res) =>
       setList(res.List.map((el) => ({ ...el, isSelected: false })))

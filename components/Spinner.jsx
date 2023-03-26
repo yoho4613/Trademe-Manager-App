@@ -7,7 +7,7 @@ const Spinner = ({ loading: loading }) => {
         <div className="absolute min-w-full h-full top-0 left-0 opacity-20 items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
           <div
             role="status"
-            className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2  scale-150 "
+            className="fixed -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2  scale-150 "
           >
             <svg
               aria-hidden="true"

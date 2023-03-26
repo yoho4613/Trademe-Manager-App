@@ -39,7 +39,7 @@ export const navigation = [
 
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-
+  
   const { user, setUser } = useStateContext();
   const router = useRouter();
 

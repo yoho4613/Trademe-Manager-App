@@ -20,7 +20,6 @@ const ListingDetail = ({ data: data, category: category }) => {
         checkTimeLeft(list.EndDate);
       }, 1000);
     }
-    console.log(list);
   }, [data, list]);
 
   const handleDelete = async (item) => {

@@ -7,6 +7,7 @@ const UserContext = createContext();
 
 export const StateContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
+  // const notify = () => toast("Wow so easy!")
 
   const [user, setUser] = useState({
     consumer: "",
@@ -18,12 +19,14 @@ export const StateContext = ({ children }) => {
     token_secret: "",
   });
 
-  const fetchData = async (url, user, parse) => {
+  const fetchData = async (url, user, parse, method, body) => {
     try {
       setIsLoading((loading) => !loading);
       const result = await axios.post("/api/mytrademe", {
         url: url,
         ...user,
+        method,
+        body,
       });
 
       if (parse) {
@@ -32,7 +35,10 @@ export const StateContext = ({ children }) => {
       setIsLoading((loading) => !loading);
       return result.data;
     } catch (error) {
-      console.log(error.message);
+      
+      console.log("frontend error",error.response.data);
+      setIsLoading((loading) => !loading);
+      throw Error(error.response.data);
     }
   };
 
@@ -45,7 +51,6 @@ export const StateContext = ({ children }) => {
       const consumerSecret = user.consumerSecret;
       const tokenSecret = user.token_secret;
       const url = BASE_URL + urlData;
-      console.log(url);
       const options = {
         method: "DELETE",
         headers: {

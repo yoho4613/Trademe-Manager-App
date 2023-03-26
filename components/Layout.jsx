@@ -4,10 +4,12 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useStateContext } from "../context/StateContext";
 import Spinner from "./Spinner";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = ({ children }) => {
   const { setUser, isLoading } = useStateContext();
-
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
@@ -26,6 +28,7 @@ const Layout = ({ children }) => {
       </header>
       <main className="main-container relative min-w-screen min-h-screen">
         <Spinner loading={isLoading} />
+        <ToastContainer  position="top-center" />
         {children}
       </main>
       <footer>

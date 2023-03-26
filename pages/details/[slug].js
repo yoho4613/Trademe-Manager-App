@@ -5,6 +5,7 @@ import { navigation } from "../../components/Navbar";
 import { useRouter } from "next/router";
 import { ListingDetail } from "../../components";
 import { useStateContext } from "../../context/StateContext";
+import EditListing from "../../components/EditListing";
 
 const DetailPage = ({ params }) => {
   const router = useRouter();
@@ -14,7 +15,11 @@ const DetailPage = ({ params }) => {
 
   useEffect(() => {
     if (user.token_secret && listId) {
-      fetchData(`/v1/Listings/${listId}.json`, user, setData);
+      const api =
+        category === "selling"
+          ? `/v1/Selling/Listings/${listId}.json`
+          : `/v1/Listings/${listId}.json`;
+      fetchData(api, user, setData);
     }
   }, [listId]);
 
@@ -24,16 +29,16 @@ const DetailPage = ({ params }) => {
   }, [data]);
 
   return (
-    <div>
-      <div className=" text-center mt-6">
-      {/* <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+    <div className=" px-6 py-6 ">
+      <div className="text-center mt-6">
+        {/* <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
         We invest in the world’s potential
       </h1> */}
-      <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-        Here at Flowbite we focus on markets where technology, innovation, and
-        capital can unlock long-term value and drive economic growth.
-      </p>
-      {/* <a
+        <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+          Here at Flowbite we focus on markets where technology, innovation, and
+          capital can unlock long-term value and drive economic growth.
+        </p>
+        {/* <a
         href="#"
         className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
       >
@@ -53,7 +58,11 @@ const DetailPage = ({ params }) => {
       </a> */}
       </div>
 
-      <ListingDetail data={data} category={category} />
+      {category === "selling" ? (
+        <EditListing data={data} category={category} />
+      ) : (
+        <ListingDetail data={data} category={category} />
+      )}
     </div>
   );
 };
