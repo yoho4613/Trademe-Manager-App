@@ -1,19 +1,18 @@
-import Context from "../context/context";
-import { Navbar } from "../components";
+import { StateContext } from "../context/StateContext";
 
 import "../styles/globals.css";
-
+import Layout from "../components/Layout";
 
 
 function MyApp({ Component, pageProps }) {
-
-
+  
   return (
     <>
-      <Context>
-        <Navbar />
-        <Component {...pageProps} />
-      </Context>
+      <StateContext>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StateContext>
     </>
   );
 }

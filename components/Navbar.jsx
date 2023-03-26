@@ -1,46 +1,69 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
-import Image from "next/image";
-import assets from "../assets";
-import { UserContext } from "../context/context";
-
+import React, { useState, useEffect, Fragment } from "react";
+import { useStateContext } from "../context/StateContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { useRouter } from "next/router";
-
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
+import Link from "next/link";
+import Image from "next/image";
+import assets from "../assets";
+import { BASE_PAGE_SLUG } from "../constant/config";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+export const navigation = [
+  { slug: "list", name: "List an Item", href: `/list`, current: false },
+  {
+    slug: "selling",
+    name: "Items I'm Selling",
+    href: `${BASE_PAGE_SLUG}/selling`,
+    current: true,
+    url: "/MyTradeMe/SellingItems/All.json",
+  },
+  {
+    slug: "watchlist",
+    name: "Watchlist",
+    href: `${BASE_PAGE_SLUG}/watchlist`,
+    current: false,
+    url: "/MyTradeMe/Watchlist/All.json",
+  },
+  {
+    slug: "sold",
+    name: "Sold Item",
+    href: `${BASE_PAGE_SLUG}/sold`,
+    current: false,
+    url: "/MyTradeMe/SoldItems/Last45Days.json",
+  },
+];
+
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-  let savedUser;
-  useEffect(() => {
-    savedUser = JSON.parse(localStorage.getItem("user")) || {};
-    if (savedUser.token && savedUser.tokenSecret) {
-      setUser(savedUser);
-      setIsAuth(true);
-    }
-  }, []);
+  
+  const { user, setUser } = useStateContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (user.token && user.tokenSecret) {
+    navigation.find((el) => el.current).current = false;
+    // navigation.map((el) => ({...el, isSelected: false}))
+
+    if (router.query.slug) {
+      if (navigation.find((el) => el.slug === router.query.slug)) {
+        navigation.find((el) => el.slug === router.query.slug).current = true;
+      } else {
+        router.push("/");
+      }
+    } 
+    
+  }, []);
+
+  useEffect(() => {
+    if (user.oauth_token && user.token_secret) {
       setIsAuth(true);
     } else {
-      false;
+      setIsAuth(false);
     }
-  }, [user.token, user.tokenSecret]);
-
-
+  }, [user.oauth_token]);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -50,6 +73,7 @@ const Navbar = () => {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
+
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -61,16 +85,20 @@ const Navbar = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Image
-                    className="block h-8 w-auto lg:hidden"
-                    src={assets.mainLogo}
-                    alt="Your Company"
-                  />
-                  <Image
-                    className="hidden h-8 w-auto lg:block"
-                    src={assets.mainLogo}
-                    alt="Your Company"
-                  />
+                  <Link href="/">
+                    <Image
+                      className="block h-8 w-auto lg:hidden"
+                      src={assets.mainLogo}
+                      alt="Your Company"
+                    />
+                  </Link>
+                  <Link href="/">
+                    <Image
+                      className="hidden h-8 w-auto lg:block"
+                      src={assets.mainLogo}
+                      alt="Your Company"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -134,15 +162,15 @@ const Navbar = () => {
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                href="/profile"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Your Profile
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
@@ -202,6 +230,7 @@ const Navbar = () => {
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
+                  onClick={(item) => (item.current = true)}
                 >
                   {item.name}
                 </Disclosure.Button>
