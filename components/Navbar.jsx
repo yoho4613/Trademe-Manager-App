@@ -39,22 +39,19 @@ export const navigation = [
 
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-  
+
   const { user, setUser } = useStateContext();
   const router = useRouter();
 
   useEffect(() => {
     navigation.find((el) => el.current).current = false;
-    // navigation.map((el) => ({...el, isSelected: false}))
-
     if (router.query.slug) {
       if (navigation.find((el) => el.slug === router.query.slug)) {
         navigation.find((el) => el.slug === router.query.slug).current = true;
       } else {
         router.push("/");
       }
-    } 
-    
+    }
   }, []);
 
   useEffect(() => {
@@ -148,6 +145,7 @@ const Navbar = () => {
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                             alt=""
                           />
+                          {/* <p className="h-8 w-8 bg-slate-50 rounded-full">J</p> */}
                         </Menu.Button>
                       </div>
                       <Transition

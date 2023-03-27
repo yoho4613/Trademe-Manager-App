@@ -74,6 +74,7 @@ const Landing = () => {
             playing={true}
             loop
             muted
+            allowFullScreen
             className="absolute top-0 left-0 w-screen"
             width="100%"
             height={"120vh"}

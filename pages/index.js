@@ -1,60 +1,41 @@
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Landing } from "../components";
-
 import { useStateContext } from "../context/StateContext";
 
 export default function Home(props) {
-  const { user, setUser } = useStateContext();
+  const {user} = useStateContext()
 
-  const router = useRouter();
 
-  useEffect(() => {
-    let timer = null;
+  // useEffect(() => {
+  //   if (user.token_secret.length && hasProfile) {
+  //     fetchData("/MyTradeMe/Summary.json", user, setProfile)
+  //       .then((res) => {
+  //         setHasProfile(false);
+  //         console.log(res);
+  //       })
+  //       .catch((err) =>
+  //         toast.error(
+  //           "There was an error with fetching your profile. Please refresh the page or login again"
+  //         )
+  //       );
+  //   }
+  // }, [user.token_secret]);
 
-    const startTimer = () => {
-      clearTimeout(timer);
+  // useEffect(() => {
+  //   if (profile && profile.hasOwnProperty("MemberId") && hasMember) {
+  //     fetchData(`/Member/${profile.MemberId}/Profile.json`, user, setMember)
+  //       .then((res) => {
+  //         setHasMember(false);
+  //         console.log(res);
+  //       })
+  //       .catch((err) =>
+  //         toast.error(
+  //           "There was an error with fetching your profile. Please refresh the page or login again"
+  //         )
+  //       );
+  //   }
+  // }, [profile]);
 
-      timer = setTimeout(() => {
-        localStorage.removeItem("user");
-        setUser({
-          consumer: "",
-          consumerSecret: "",
-          token: "",
-          tokenSecret: "",
-          verifier: "",
-          oauth_token: "",
-          token_secret: "",
-        });
-        router.push("/login");
-      }, 30 * 60 * 1000); // 30 minutes in milliseconds
-    };
-
-    const stopTimer = () => {
-      clearTimeout(timer);
-    };
-
-    startTimer();
-
-    document.addEventListener("click", startTimer);
-    document.addEventListener("keypress", startTimer);
-
-    return () => {
-      stopTimer();
-
-      document.removeEventListener("click", startTimer);
-      document.removeEventListener("keypress", startTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
-        setUser(JSON.parse(localStorage.getItem("user")));
-      }
-    }
-  }, []);
 
   return (
     <div>

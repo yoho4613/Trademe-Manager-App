@@ -171,7 +171,7 @@ const EditListing = ({ category: category, data: data }) => {
                     className="relative mt-6 w-4/6 md:w-3/12 mr-2 ml-2 "
                   >
                     <input
-                      type={isNaN(list[key]) ? "text" : "number"}
+                      type={isNaN(data[key]) ? "text" : "number"}
                       name={key}
                       id="floating_email"
                       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -183,7 +183,7 @@ const EditListing = ({ category: category, data: data }) => {
                           ...list,
                           [key]: isNaN(list[key])
                             ? e.target.value
-                            : Number(e.target.value),
+                            : Number(e.target.value) <= 0 ? 1 : Number(e.target.value),
                         }))
                       }
                     />

@@ -4,18 +4,56 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useStateContext } from "../context/StateContext";
 import Spinner from "./Spinner";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({ children }) => {
-  const { setUser, isLoading } = useStateContext();
-  
+  const {user, setUser, isLoading } = useStateContext();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
+      if (!user.token_secret.length && JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length) {
         setUser(JSON.parse(localStorage.getItem("user")));
       }
     }
+  }, []);
+
+  useEffect(() => {
+    let timer = null;
+
+    const startTimer = () => {
+      clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        localStorage.removeItem("user");
+        setUser({
+          consumer: "",
+          consumerSecret: "",
+          token: "",
+          tokenSecret: "",
+          verifier: "",
+          oauth_token: "",
+          token_secret: "",
+        });
+        router.push("/login");
+      }, 30 * 60 * 1000); // 30 minutes in milliseconds
+    };
+
+    const stopTimer = () => {
+      clearTimeout(timer);
+    };
+
+    startTimer();
+
+    document.addEventListener("click", startTimer);
+    document.addEventListener("keypress", startTimer);
+
+    return () => {
+      stopTimer();
+
+      document.removeEventListener("click", startTimer);
+      document.removeEventListener("keypress", startTimer);
+    };
   }, []);
 
   return (
@@ -28,7 +66,7 @@ const Layout = ({ children }) => {
       </header>
       <main className="main-container relative min-w-screen min-h-screen">
         <Spinner loading={isLoading} />
-        <ToastContainer  position="top-center" />
+        <ToastContainer position="top-center" />
         {children}
       </main>
       <footer>

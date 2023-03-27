@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ListingDetail } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 import EditListing from "../../components/EditListing";
+import { toast } from "react-toastify";
 
 const DetailPage = ({ params }) => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const DetailPage = ({ params }) => {
         category === "selling"
           ? `/v1/Selling/Listings/${listId}.json`
           : `/v1/Listings/${listId}.json`;
-      fetchData(api, user, setData);
+      fetchData(api, user, setData).catch(err => toast.error(`There was an error. Refresh the page or try later`));
     }
   }, [listId]);
 

@@ -2,37 +2,38 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/StateContext";
 
+import assets from "../assets";
+import Image from "next/image";
+
 const profile = () => {
-  const { user } = useStateContext();
+  const { user, fetchData, notifyError } = useStateContext();
   const [profile, setProfile] = useState({});
+  const [member, setMember] = useState({});
 
   useEffect(() => {
-    if (user.oauth_token && user.token_secret) {
-      getProfile(user);
+    console.log(profile);
+    if (profile.MemberId) {
+      fetchData(
+        `/Member/${profile.MemberId}/Profile.json`,
+        user,
+        setMember
+      ).catch((err) => notifyError());
     }
+  }, [profile]);
 
+  useEffect(() => {
+    console.log(member);
+  }, [member]);
+
+  useEffect(() => {
+    if (user.oauth_token.length && user.token_secret.length) {
+      fetchData("/MyTradeMe/Summary.json", user, setProfile).catch((err) =>
+        notifyError()
+      );
+    }
   }, [user.oauth_token]);
 
-  const getProfile = async (user) => {
-    const result = await axios.post("/api/mytrademe", {
-      ...user,
-      url: "/MyTradeMe/Summary.json",
-    });
-
-    setProfile(result.data);
-    return result.data;
-  };
-
-  // Get Profile Photo If user has
-  const getPhoto = async (user) => {
-    const result = await axios.post("/api/mytrademe", {
-      ...user,
-      url: "/Photos.json"
-    })
-    console.log(result.data)
-  }
-
-
+  
   return (
     <div>
       <section
@@ -46,8 +47,10 @@ const profile = () => {
           {profile && (
             <>
               <div className="mt-6 w-fit mx-auto">
-                <img
-                  src="https://api.lorem.space/image/face?w=120&h=120&hash=bart89fe"
+                <Image
+                  src={member.Photo ? member.Photo : assets.kiwi}
+                  width={100}
+                  height={100}
                   className="rounded-full w-28 "
                   alt="profile picture"
                   srcSet=""
@@ -58,13 +61,15 @@ const profile = () => {
                   {profile.FirstName} {profile.LastName}
                 </h2>
               </div>
-           
 
               <h2 className="text-white font-bold text-2md tracking-wide">
                 Member Since:{" "}
                 {new Date(Number(profile?.DateJoined?.replace(/\D/g, "")))
                   .toString()
                   .slice(0, 16)}
+              </h2>
+              <h2 className="text-white font-bold text-2md tracking-wide">
+                {profile.Email}
               </h2>
               <div className="mt-3 text-white text-sm">
                 {/* <span className="text-gray-400 font-semibold">Balance: </span> */}
@@ -78,11 +83,14 @@ const profile = () => {
                 ) : (
                   <p>Address is not verified"</p>
                 )}
-                <p>
-                {profile.ClosestLocality}
-
-                </p>
+                <p>{profile.ClosestLocality}</p>
               </div>
+              {member && (
+                <div className="mt-3 text-white text-sm">
+                  <p>Biography: {member.Biography}</p>
+                  <p>Quote: {member.Quote}</p>
+                </div>
+              )}
             </>
           )}
         </section>

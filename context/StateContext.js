@@ -2,12 +2,14 @@ import crypto from "crypto";
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import { BASE_URL } from "../constant/config";
+import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
 export const StateContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const notify = () => toast("Wow so easy!")
+  const notifyError = () => toast.error(`There was an error. Refresh the page or try later`)
+  
 
   const [user, setUser] = useState({
     consumer: "",
@@ -18,6 +20,8 @@ export const StateContext = ({ children }) => {
     oauth_token: "",
     token_secret: "",
   });
+
+  
 
   const fetchData = async (url, user, parse, method, body) => {
     try {
@@ -120,6 +124,7 @@ export const StateContext = ({ children }) => {
         isLoading,
         setIsLoading,
         removeWatchlist,
+        notifyError,
       }}
     >
       {children}

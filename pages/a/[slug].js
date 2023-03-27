@@ -3,30 +3,33 @@ import { navigation } from "../../components/Navbar";
 import { Spinner, TableDetail } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const MenuPage = ({ params }) => {
   const { user, fetchData } = useStateContext();
   const [nav, setNav] = useState(navigation.find((menu) => menu.current));
   const [data, setData] = useState({});
-  const router = useRouter()
-  
+  const router = useRouter();
 
   useEffect(() => {
-    if(!localStorage.key('user')) {
-      router.push('/login')
+    if (!localStorage.key("user")) {
+      router.push("/login");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (user.token_secret) {
-      fetchData(nav?.url, user, setData);
+    if (user.token_secret.length) {
+      fetchData(nav?.url, user, setData).catch((err) =>
+        toast.error(`There was an error. Refresh the page or try later`)
+      );
     }
-
   }, [user.token_secret, nav]);
 
   useEffect(() => {
-    setNav(navigation.find((menu) => menu.current) || navigation.find((menu) => menu.slug === router.query.slug));
-
+    setNav(
+      navigation.find((menu) => menu.current) ||
+        navigation.find((menu) => menu.slug === router.query.slug)
+    );
   }, [navigation]);
 
   return (
