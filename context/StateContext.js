@@ -8,8 +8,8 @@ const UserContext = createContext();
 
 export const StateContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const notifyError = () => toast.error(`There was an error. Refresh the page or try later`)
-  
+  const notifyError = () =>
+    toast.error(`There was an error. Refresh the page or try later`);
 
   const [user, setUser] = useState({
     consumer: "",
@@ -20,8 +20,6 @@ export const StateContext = ({ children }) => {
     oauth_token: "",
     token_secret: "",
   });
-
-  
 
   const fetchData = async (url, user, parse, method, body) => {
     try {
@@ -39,12 +37,13 @@ export const StateContext = ({ children }) => {
       setIsLoading((loading) => !loading);
       return result.data;
     } catch (error) {
-      
-      console.log("frontend error",error.response.data);
+      console.log("frontend error", error.response.data);
       setIsLoading((loading) => !loading);
       throw Error(error.response.data);
     }
   };
+
+  
 
   const removeWatchlist = async (urlData, user, parse) => {
     setIsLoading((loading) => !loading);
@@ -114,6 +113,8 @@ export const StateContext = ({ children }) => {
       console.log("it is error ");
     }
   };
+
+  
 
   return (
     <UserContext.Provider

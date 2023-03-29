@@ -12,14 +12,14 @@ const MenuPage = ({ params }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!localStorage.key("user")) {
+    if (!localStorage.getItem("user")) {
       router.push("/login");
     }
   }, []);
 
   useEffect(() => {
     if (user.token_secret.length) {
-      fetchData(nav?.url, user, setData).catch((err) =>
+      fetchData(nav?.url, user, setData).then(res => console.log(res)).catch((err) =>
         toast.error(`There was an error. Refresh the page or try later`)
       );
     }

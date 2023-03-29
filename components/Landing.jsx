@@ -8,6 +8,9 @@ const Landing = () => {
     width: 0,
     height: 0,
   });
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+
   useEffect(() => {
     if (typeof window !== undefined) {
       setVideo(true);
@@ -27,21 +30,10 @@ const Landing = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    // Check if the current window width is less than or equal to 750px
-    if (windowSize.width <= 990) {
-      // Do something here, like update a state variable
-      // For example: setIsMobile(true);
-    } else {
-      // Do something else here, like update a state variable
-      // For example: setIsMobile(false);
-    }
-  }, [windowSize]);
-
   const handleSubscribe = (e) => {
     e.preventDefault();
-    
-  }
+    // Need to pass data to database
+  };
 
   return (
     <div>
@@ -373,12 +365,6 @@ const Landing = () => {
                 "radial-gradient(650px circle at 0% 0%, hsl(218, 41%, 35%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%), radialGradient( 1250px circle at 100% 100%, hsl(218, 41%, 45%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%)",
             }}
           >
-            {/* <style>
-      .background-radial-gradient {
-       
-      }
-    </style> */}
-
             <div className="px-6 py-12 md:px-12 text-center lg:text-left">
               <div className="container mx-auto xl:px-32">
                 <div className="grid lg:grid-cols-2 gap-12 flex items-center">
@@ -411,6 +397,8 @@ const Landing = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleInput90"
                             placeholder="Name"
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                           />
                         </div>
                         <div className="form-group mb-6">
@@ -419,6 +407,8 @@ const Landing = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleInput91"
                             placeholder="Email address"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                           />
                         </div>
                         <div className="form-group form-check text-center mb-6">

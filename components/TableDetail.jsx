@@ -11,7 +11,6 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
   const [list, setList] = useState(lists);
   const [isSelected, setIsSelected] = useState([]);
   const [response, setResponse] = useState({});
-
   //Only for Checking List Data
   useEffect(() => {
     console.log(data);
@@ -74,17 +73,24 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
         );
     } else if (category === "selling") {
       console.log("delete");
-      await axios
-        .post("/api/withdrawListing", {
-          url: "https://api.trademe.co.nz/v1/Selling/Withdraw.json",
-          user: user,
-          method: "POST",
-          body: {
-            ListingId: item.ListingId,
-            Type: 2,
-          },
-        })
-        .then((res) => console.log(res));
+      const reason = prompt("Please provide reason");
+      await fetchData("/Selling/Withdraw.json", user, setResponse, "POST", {
+        ListingId: item.ListingId,
+        Type: 2,
+        Reason: reason,
+      }).then((res) => {
+        if (!res.Success) {
+          toast.error(
+            "There was problem with withdrawing your listing. Listing could be withdrawn already. please check your listing and try again."
+          );
+        } else {
+          toast.success("Listing successfully Deleted!");
+          fetchData(url, user, setList).then((res) =>
+            setList(res.List.map((el) => ({ ...el, isSelected: false })))
+          );
+        }
+        console.log(res);
+      });
     }
   };
 
@@ -256,7 +262,6 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                         <Link
                           href={`/details/${category}?listId=${item.ListingId}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          // onClick={() => handleEdit(item)}
                         >
                           Detail
                         </Link>
@@ -264,7 +269,6 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                         <Link
                           href={`/details/${category}?listId=${item.ListingId}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          // onClick={() => handleEdit(item)}
                         >
                           Edit
                         </Link>
@@ -274,7 +278,7 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                         onClick={() => handleDelete(item)}
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Delete
+                        Withdraw
                       </button>
                     </td>
                   </tr>

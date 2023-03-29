@@ -1,45 +1,28 @@
 import { useEffect } from "react";
 import { Landing } from "../components";
-import { useStateContext } from "../context/StateContext";
+
 
 export default function Home(props) {
-  const {user} = useStateContext()
 
+  useEffect(() => {
+    const alanBtn = require("@alan-ai/alan-sdk-web");
 
-  // useEffect(() => {
-  //   if (user.token_secret.length && hasProfile) {
-  //     fetchData("/MyTradeMe/Summary.json", user, setProfile)
-  //       .then((res) => {
-  //         setHasProfile(false);
-  //         console.log(res);
-  //       })
-  //       .catch((err) =>
-  //         toast.error(
-  //           "There was an error with fetching your profile. Please refresh the page or login again"
-  //         )
-  //       );
-  //   }
-  // }, [user.token_secret]);
-
-  // useEffect(() => {
-  //   if (profile && profile.hasOwnProperty("MemberId") && hasMember) {
-  //     fetchData(`/Member/${profile.MemberId}/Profile.json`, user, setMember)
-  //       .then((res) => {
-  //         setHasMember(false);
-  //         console.log(res);
-  //       })
-  //       .catch((err) =>
-  //         toast.error(
-  //           "There was an error with fetching your profile. Please refresh the page or login again"
-  //         )
-  //       );
-  //   }
-  // }, [profile]);
+    alanBtn({
+      key: "2b2ff89b92b3fe83f2bc358a7062641e2e956eca572e1d8b807a3e2338fdd0dc/stage",
+      onCommand: (commandData) => {
+        if (commandData === "play") {
+          console.log("works");
+        }
+      },
+      rootEl: document.getElementById("alan-btn"),
+    });
+  }, []);
 
 
   return (
     <div>
       <Landing />
+
     </div>
   );
 }

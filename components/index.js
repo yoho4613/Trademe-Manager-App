@@ -7,4 +7,5 @@ import Spinner from "./Spinner";
 import ListingDetail from "./ListingDetail";
 
 
+
 export { Navbar, Landing, Layout, SellingProducts, TableDetail, Spinner, ListingDetail };

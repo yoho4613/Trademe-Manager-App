@@ -35,6 +35,13 @@ export const navigation = [
     current: false,
     url: "/MyTradeMe/SoldItems/Last45Days.json",
   },
+  {
+    slug: "unsold",
+    name: "Unsold Item",
+    href: `${BASE_PAGE_SLUG}/unsold`,
+    current: false,
+    url: "/MyTradeMe/UnsoldItems/ItemsICanRelist.json",
+  },
 ];
 
 const Navbar = () => {
