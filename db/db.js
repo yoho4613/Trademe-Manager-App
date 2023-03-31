@@ -1,19 +1,11 @@
-import knex from 'knex'
-import config from './knexfile'
-import connection from './connection'
+import connection from "./connection";
 
+export function getAllSubscribers(db = connection) {
 
-export function getAllPostadds(db = connection) {
-  return db('posts').select(
-    'date_created as dateCreated',
-    'id',
-    'title',
-    'text'
-  ) 
+  return db("subscribers").select();
 }
 
 export async function addUser(user, db = connection) {
-  console.log(user)
-  return await db('subscribers').insert({ ...user })
-
+  console.log(user);
+  return await db("subscribers").insert({ ...user });
 }

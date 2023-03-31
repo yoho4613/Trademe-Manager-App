@@ -1,15 +1,19 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import VimeoPlayer from "react-player/vimeo";
+import { toast } from "react-toastify";
+import { useStateContext } from "../context/StateContext";
 
 const Landing = () => {
+  const { notifyError } = useStateContext();
   const [video, setVideo] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: 0,
     height: 0,
   });
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -32,7 +36,18 @@ const Landing = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
+    if(!name.length || !email.length) {
+      toast.error("Name or Email input is missing")
+      return null
+    } 
     // Need to pass data to database
+    axios
+      .post("/api/subscribers", { name, email })
+      .then((res) => toast.success("Successfully added!"))
+      .catch((err) => notifyError());
+
+    setName("")
+    setEmail("")
   };
 
   return (
@@ -398,7 +413,7 @@ const Landing = () => {
                             id="exampleInput90"
                             placeholder="Name"
                             value={name}
-                            onChange={e => setName(e.target.value)}
+                            onChange={(e) => setName(e.target.value)}
                           />
                         </div>
                         <div className="form-group mb-6">
@@ -408,7 +423,7 @@ const Landing = () => {
                             id="exampleInput91"
                             placeholder="Email address"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
                         <div className="form-group form-check text-center mb-6">

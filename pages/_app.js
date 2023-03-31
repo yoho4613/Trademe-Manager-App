@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { StateContext } from "../context/StateContext";
 
 import "../styles/globals.css";

@@ -5,6 +5,7 @@ import { Landing } from "../components";
 export default function Home(props) {
 
   useEffect(() => {
+    
     const alanBtn = require("@alan-ai/alan-sdk-web");
 
     alanBtn({
@@ -22,7 +23,6 @@ export default function Home(props) {
   return (
     <div>
       <Landing />
-
     </div>
   );
 }
