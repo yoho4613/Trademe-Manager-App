@@ -46,9 +46,9 @@ export const navigation = [
 
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
-
-  const { user, setUser } = useStateContext();
+  const { user, setUser, navBar, setNavBar } = useStateContext();
   const router = useRouter();
+
 
   useEffect(() => {
     navigation.find((el) => el.current).current = false;
@@ -60,6 +60,8 @@ const Navbar = () => {
       }
     }
   }, []);
+
+  
 
   useEffect(() => {
     if (user.oauth_token && user.token_secret) {

@@ -36,18 +36,18 @@ const Landing = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if(!name.length || !email.length) {
-      toast.error("Name or Email input is missing")
-      return null
-    } 
+    if (!name.length || !email.length) {
+      toast.error("Name or Email input is missing");
+      return null;
+    }
     // Need to pass data to database
     axios
       .post("/api/subscribers", { name, email })
       .then((res) => toast.success("Successfully added!"))
       .catch((err) => notifyError());
 
-    setName("")
-    setEmail("")
+    setName("");
+    setEmail("");
   };
 
   return (
@@ -216,9 +216,15 @@ const Landing = () => {
               <div className="px-6 py-12 md:px-12">
                 <h2 className="text-3xl font-bold mb-6">Why is it so great?</h2>
                 <p className="text-gray-500 mb-6">
-                  Nunc tincidunt vulputate elit. Mauris varius purus malesuada
-                  neque iaculis malesuada. Aenean gravida magna orci, non
-                  efficitur est porta id. Donec magna diam.
+                  Welcome to Trademe-Manager, the ultimate app for managing your
+                  Trademe listings and watchlists! With seamless integration of
+                  all Trademe APIs, you can easily create new listings, edit
+                  your current ones, and keep track of your unsold items with
+                  just a few clicks. Our user-friendly interface makes it easy
+                  to navigate through your watchlists and stay up-to-date on the
+                  latest listings. Whether you're a seasoned seller or just
+                  starting out, Trademe-Manager is the perfect tool to
+                  streamline your Trademe experience.
                 </p>
 
                 <div className="grid md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">

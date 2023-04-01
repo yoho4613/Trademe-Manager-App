@@ -10,24 +10,8 @@ const Footer = () => {
       <div className="container px-6 pt-6 text-center ml-auto mr-auto">
         <div className="flex justify-evenly w-8/12 mr-auto ml-auto">
           <Link
-            href="#!"
-            type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-            </svg>
-          </Link>
-
-          <Link
-            href="#!"
+            href="https://twitter.com/PARKJIH78276090"
+            target="_blank"
             type="button"
             className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
@@ -43,29 +27,11 @@ const Footer = () => {
             </svg>
           </Link>
 
-          <Link
-            href="#!"
-            type="button"
-            className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="mx-auto h-full w-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M7 11v2.4h3.97c-.16 1.029-1.2 3.02-3.97 3.02-2.39 0-4.34-1.979-4.34-4.42 0-2.44 1.95-4.42 4.34-4.42 1.36 0 2.27.58 2.79 1.08l1.9-1.83c-1.22-1.14-2.8-1.83-4.69-1.83-3.87 0-7 3.13-7 7s3.13 7 7 7c4.04 0 6.721-2.84 6.721-6.84 0-.46-.051-.81-.111-1.16h-6.61zm0 0 17 2h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2z"
-                fillRule="evenodd"
-                clipRule="evenodd"
-              />
-            </svg>
-          </Link>
+        
 
           <Link
-            href="#!"
+            href="https://www.instagram.com/jiiho_park/"
+            target="_blank"
             type="button"
             className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
@@ -82,7 +48,8 @@ const Footer = () => {
           </Link>
 
           <Link
-            href="#!"
+            href="https://www.linkedin.com/in/park-jiho-130159162/"
+            target="_blank"
             type="button"
             className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init
@@ -99,7 +66,8 @@ const Footer = () => {
           </Link>
 
           <Link
-            href="#!"
+            href="https://github.com/yoho4613"
+            target="_blank"
             type="button"
             className="m-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
             data-te-ripple-init

@@ -183,7 +183,9 @@ const EditListing = ({ category: category, data: data }) => {
                           ...list,
                           [key]: isNaN(list[key])
                             ? e.target.value
-                            : Number(e.target.value) <= 0 ? 1 : Number(e.target.value),
+                            : Number(e.target.value) <= 0
+                            ? 1
+                            : Number(e.target.value),
                         }))
                       }
                     />

@@ -367,7 +367,7 @@ export const GENERAL_ITEM_LISTING_ARRAY = {
       Value: {},
     },
   ],
-}
+};
 
 export const GENERAL_ITEM_LISTING_OBJECT = {
   GeographicLocation: {
@@ -540,24 +540,23 @@ export const GENERAL_ITEM_LISTING_OBJECT = {
     ],
   },
   ProductSpecification: {},
-
-}
+};
 
 export const GENERAL_ITEM_LISTING_FORMAT = {
   // Category: "ABC",
   Title: "ABC",
   // Subtitle: "ABC",
-  Description: ["ABC", "ABC"],
+  Description: [""],
   StartPrice: 123.0,
   ReservePrice: 123.0,
   BuyNowPrice: 123.0,
   Duration: 7,
   // EndDateTime: "/Date(1514764800)/",
-  Pickup: 0,
+  Pickup: 3,
   // PickupSuburbId: 123,
   IsBrandNew: true,
   // AuthenticatedMembersOnly: false,
-  // IsClassified: false,
+  IsClassified: false,
   // OpenHomes: [
   //   {
   //     Start: "/Date(1514764800)/",
@@ -578,7 +577,7 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
   // HasGallery: false,
   // HasGalleryPlus: false,
   // Quantity: 123,
-  // IsFlatShippingCharge: false,
+  IsFlatShippingCharge: true,
   // HasAgreedWithLegalNotice: false,
   // AutoRelistLimit: 123,
   // HomePhoneNumber: "ABC",
@@ -586,72 +585,72 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
   // IsHighlighted: false,
   // HasSuperFeature: false,
   // PhotoIds: [123, 123],
-  // ShippingOptions: [
-  //   {
-  //     Type: 0,
-  //     Price: 123.0,
-  //     Method: "ABC",
-  //     ShippingId: 123,
-  //     TaxesIncluded: [
-  //       {
-  //         Type: 1,
-  //         Country: "ABC",
-  //         Name: "ABC",
-  //         FlatRate: 123.0,
-  //         Description: "ABC",
-  //         IsSellRestrictionsEffective: false,
-  //         IsTaxEffective: false,
-  //         IsApplied: false,
-  //         TaxAmount: 123.0,
-  //         WasPriceTaxAmount: 123.0,
-  //       },
-  //       {
-  //         Type: 1,
-  //         Country: "ABC",
-  //         Name: "ABC",
-  //         FlatRate: 123.0,
-  //         Description: "ABC",
-  //         IsSellRestrictionsEffective: false,
-  //         IsTaxEffective: false,
-  //         IsApplied: false,
-  //         TaxAmount: 123.0,
-  //         WasPriceTaxAmount: 123.0,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     Type: 0,
-  //     Price: 123.0,
-  //     Method: "ABC",
-  //     ShippingId: 123,
-  //     TaxesIncluded: [
-  //       {
-  //         Type: 1,
-  //         Country: "ABC",
-  //         Name: "ABC",
-  //         FlatRate: 123.0,
-  //         Description: "ABC",
-  //         IsSellRestrictionsEffective: false,
-  //         IsTaxEffective: false,
-  //         IsApplied: false,
-  //         TaxAmount: 123.0,
-  //         WasPriceTaxAmount: 123.0,
-  //       },
-  //       {
-  //         Type: 1,
-  //         Country: "ABC",
-  //         Name: "ABC",
-  //         FlatRate: 123.0,
-  //         Description: "ABC",
-  //         IsSellRestrictionsEffective: false,
-  //         IsTaxEffective: false,
-  //         IsApplied: false,
-  //         TaxAmount: 123.0,
-  //         WasPriceTaxAmount: 123.0,
-  //       },
-  //     ],
-  //   },
-  // ],
+  ShippingOptions: [
+    {
+      Type: 1,
+      Price: 12.0,
+      Method: "ABC",
+      ShippingId: 1,
+      TaxesIncluded: [
+        {
+          Type: 1,
+          Country: "ABC",
+          Name: "ABC",
+          FlatRate: 123.0,
+          Description: "ABC",
+          IsSellRestrictionsEffective: false,
+          IsTaxEffective: false,
+          IsApplied: false,
+          TaxAmount: 123.0,
+          WasPriceTaxAmount: 123.0,
+        },
+        {
+          Type: 1,
+          Country: "ABC",
+          Name: "ABC",
+          FlatRate: 123.0,
+          Description: "ABC",
+          IsSellRestrictionsEffective: false,
+          IsTaxEffective: false,
+          IsApplied: false,
+          TaxAmount: 123.0,
+          WasPriceTaxAmount: 123.0,
+        },
+      ],
+    },
+    {
+      Type: 2,
+      Price: 13.0,
+      Method: "ABC",
+      ShippingId: 2,
+      TaxesIncluded: [
+        {
+          Type: 1,
+          Country: "ABC",
+          Name: "ABC",
+          FlatRate: 123.0,
+          Description: "ABC",
+          IsSellRestrictionsEffective: false,
+          IsTaxEffective: false,
+          IsApplied: false,
+          TaxAmount: 123.0,
+          WasPriceTaxAmount: 123.0,
+        },
+        {
+          Type: 1,
+          Country: "ABC",
+          Name: "ABC",
+          FlatRate: 123.0,
+          Description: "ABC",
+          IsSellRestrictionsEffective: false,
+          IsTaxEffective: false,
+          IsApplied: false,
+          TaxAmount: 123.0,
+          WasPriceTaxAmount: 123.0,
+        },
+      ],
+    },
+  ],
   PaymentMethods: [1, 2],
   // Attributes: [
   //   {
@@ -1009,31 +1008,6 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
 
 export const SHIPPING_OPTIONS = {};
 
-{/* <ListingRequest xmlns="http://api.trademe.co.nz/v1">
-  <Category>3849</Category>
-  <Title>Arty surprise</Title>
-  <Description>
-    <Paragraph>All true art lovers will buy this.</Paragraph>
-  </Description>
-  <StartPrice>7</StartPrice>
-  <BuyNowPrice>9</BuyNowPrice>
-  <Duration>Seven</Duration>
-  <Pickup>Allow</Pickup>
-  <IsBrandNew>true</IsBrandNew>
-  <PhotoIds>
-    <PhotoId>12345678</PhotoId>
-  </PhotoIds>
-  <ShippingOptions>
-    <ShippingOption>
-      <Type>Free</Type>
-    </ShippingOption>
-  </ShippingOptions>
-  <PaymentMethods>
-    <PaymentMethod>CreditCard</PaymentMethod>
-    <PaymentMethod>Cash</PaymentMethod>
-  </PaymentMethods>
-</ListingRequest> */}
-
 const LISTING_EXAMPLE = {
   Category: "3849",
   title: "Arty surprise",
@@ -1045,5 +1019,5 @@ const LISTING_EXAMPLE = {
   IsBrandNew: true,
   PhotoIds: [12345678],
   ShippingOptions: [],
-  PaymentMethod: [1,2]
-}
+  PaymentMethod: [1, 2],
+};

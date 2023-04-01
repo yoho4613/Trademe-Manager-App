@@ -1,16 +1,13 @@
 import crypto from "crypto";
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
-import { BASE_URL } from "../constant/config";
+import { BASE_URL, BASE_PAGE_SLUG } from "../constant/config";
 import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
 export const StateContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const notifyError = () =>
-    toast.error(`There was an error. Refresh the page or try later`);
-
   const [user, setUser] = useState({
     consumer: "",
     consumerSecret: "",
@@ -20,6 +17,40 @@ export const StateContext = ({ children }) => {
     oauth_token: "",
     token_secret: "",
   });
+  const [navBar, setNavBar] = useState([
+    { slug: "list", name: "List an Item", href: `/list`, current: false },
+    {
+      slug: "selling",
+      name: "Items I'm Selling",
+      href: `${BASE_PAGE_SLUG}/selling`,
+      current: true,
+      url: "/MyTradeMe/SellingItems/All.json",
+    },
+    {
+      slug: "watchlist",
+      name: "Watchlist",
+      href: `${BASE_PAGE_SLUG}/watchlist`,
+      current: false,
+      url: "/MyTradeMe/Watchlist/All.json",
+    },
+    {
+      slug: "sold",
+      name: "Sold Item",
+      href: `${BASE_PAGE_SLUG}/sold`,
+      current: false,
+      url: "/MyTradeMe/SoldItems/Last45Days.json",
+    },
+    {
+      slug: "unsold",
+      name: "Unsold Item",
+      href: `${BASE_PAGE_SLUG}/unsold`,
+      current: false,
+      url: "/MyTradeMe/UnsoldItems/ItemsICanRelist.json",
+    },
+  ]);
+
+  const notifyError = () =>
+    toast.error(`There was an error. Refresh the page or try later`);
 
   const fetchData = async (url, user, parse, method, body) => {
     try {
@@ -42,8 +73,6 @@ export const StateContext = ({ children }) => {
       throw Error(error.response.data);
     }
   };
-
-  
 
   const removeWatchlist = async (urlData, user, parse) => {
     setIsLoading((loading) => !loading);
@@ -114,8 +143,6 @@ export const StateContext = ({ children }) => {
     }
   };
 
-  
-
   return (
     <UserContext.Provider
       value={{
@@ -126,6 +153,8 @@ export const StateContext = ({ children }) => {
         setIsLoading,
         removeWatchlist,
         notifyError,
+        navBar,
+        setNavBar
       }}
     >
       {children}
