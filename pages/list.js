@@ -28,7 +28,7 @@ const timeOption = {
   minutes: ["00", 15, 30, 45],
 };
 
-const list = () => {
+const List = () => {
   const router = useRouter();
   const { user, fetchData } = useStateContext();
   const [form, setForm] = useState(GENERAL_ITEM_LISTING_FORMAT);
@@ -719,4 +719,4 @@ const list = () => {
   );
 };
 
-export default list;
+export default List;
