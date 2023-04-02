@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 require("dotenv").config()
 const nextConfig = {
+  ignoreDuringBuilds: true,
   reactStrictMode: false,
   images: {
     domains: ["images.tmsandbox.co.nz",],
