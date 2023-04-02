@@ -41,10 +41,23 @@ const Landing = () => {
       return null;
     }
     // Need to pass data to database
+    // axios
+    //   .post("/api/subscribers", { name, email })
+    //   .then((res) => toast.success("Successfully added!"))
+    //   .catch((err) => notifyError());
+
+    if(!name.length && !email.length) {
+      return toast.error("Missing information. Please check your Name and Email address")
+    }
     axios
-      .post("/api/subscribers", { name, email })
-      .then((res) => toast.success("Successfully added!"))
-      .catch((err) => notifyError());
+      .post("/api/send-email", {
+        name,
+        email,
+      })
+      .then((res) => toast.success("You are successfully subscribed!"))
+      .catch((err) =>
+        toast.error("There was a problem with subscribe. Please try again")
+      );
 
     setName("");
     setEmail("");

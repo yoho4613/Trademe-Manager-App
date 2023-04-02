@@ -42,16 +42,36 @@ const list = () => {
     date: new Date().getDate(),
     time: "11:45",
   });
+  const [attributes, setAttributes] = useState([]);
 
   useEffect(() => {
+   
     getCategories();
   }, []);
+
+  // useEffect(() => {
+  //   if(typeof window !== undefined) {
+  //     if(!localStorage.key("user"))
+  //     toast.error("You need to login before start listing")
+  //     router.push('/')
+  //   }
+  // }, [])
 
   useEffect(() => {
     if (Object.keys(selectedCategory).length) {
       const categoryKeys = Object.keys(selectedCategory);
       const lastKey = categoryKeys[categoryKeys.length - 1];
       setForm({ ...form, Category: selectedCategory[lastKey].Number });
+      console.log(selectedCategory);
+
+      axios
+        .get(
+          `${BASE_URL}/Categories/${selectedCategory[lastKey].Number}/Attributes.json`
+        )
+        // .then((res) => setForm({ ...form, Attributes: res.data }))
+        .then((res) => setAttributes(res.data))
+        .then(console.log(attributes))
+        .catch((err) => console.log("no attributes"));
     }
   }, [selectedCategory]);
 
@@ -65,6 +85,12 @@ const list = () => {
       });
     }
   }, [selectedDate, form.Duration]);
+
+  useEffect(() => {
+    setForm({ ...form, Attributes: attributes });
+    console.log(attributes);
+    console.log(form)
+  }, [attributes]);
 
   const getCategories = async () => {
     setCategories(
@@ -122,6 +148,107 @@ const list = () => {
     setSelectedDate({ ...selectedDate, time: e.target.value });
   };
 
+  function AttributeForm({ attribute, type, keyName }) {
+    if (attribute.Name === "NumberPlate") {
+      return (
+        <div key={keyName}>
+          <label className="mr-4" htmlFor={attribute.Name}>
+            {attribute.DisplayName}
+          </label>
+          <input
+            className="border-2"
+            type="text"
+            defaultValue={attribute.Value}
+            id={attribute.Name}
+            name={attribute.Name}
+            onChange={(e) => {
+              console.log(attribute);
+              attribute.Value = e.target.value;
+            }}
+          />
+        </div>
+      );
+    }
+    if (type === 1) {
+      return (
+        <div key={keyName}>
+          <label className="mr-4" htmlFor={attribute.Name}>
+            {attribute.Name}
+          </label>
+          <input
+            className="border-2"
+            type="checkbox"
+            id={attribute.Name}
+            name={attribute.Name}
+            defaultChecked={attribute.Value}
+            onChange={(e) =>
+              setAttributes(
+                attributes.map((el) =>
+                  el.Name === attribute.Name
+                    ? e.target.checked
+                      ? { ...el, Value: true }
+                      : { ...el, Value: false }
+                    : el
+                )
+              )
+            }
+          />
+        </div>
+      );
+    } else if (type === 2 || type === 3 || type === 4) {
+      if (attribute.Options) {
+        return (
+          <div key={keyName}>
+            <label className="mr-4" htmlFor={attribute.Name}>
+              {attribute.DisplayName}
+            </label>
+            <select
+              defaultValue={attribute.Value}
+              onChange={(e) => {
+                setAttributes(
+                  attributes.map((el) =>
+                    el.Name === attribute.Name
+                      ? { ...el, Value: e.target.value }
+                      : el
+                  )
+                );
+              }}
+              id={attribute.Name}
+              name={attribute.Name}
+            >
+              {attribute.Options &&
+                attribute.Options.map((option, index) => (
+                  <option key={index} value={option.Value}>
+                    {option.Display}
+                  </option>
+                ))}
+            </select>
+          </div>
+        );
+      } else if (attribute.Range) {
+        return (
+          <div key={keyName}>
+            <label className="mr-4" htmlFor={attribute.Name}>
+              {attribute.DisplayName}
+            </label>
+            <input
+              className="border-2"
+              type="number"
+              defaultValue={attribute.Value}
+              id={attribute.Name}
+              name={attribute.Name}
+              min={attribute.Range.Lower}
+              max={attribute.Range.Upper}
+              onChange={(e) => {
+                console.log(attribute);
+                attribute.Value = e.target.value;
+              }}
+            />
+          </div>
+        );
+      }
+    }
+  }
   return (
     <div>
       <form className="px-6 py-6">
@@ -138,6 +265,12 @@ const list = () => {
               id="categories"
               name="categories"
               className="w-full border-2"
+              // onChange={(e) =>
+              //   { console.log(e.target.value)
+              //     setSelectedCategory({
+              //     firstCategory: e.target.value,
+              //   })}
+              // }
             >
               {categories.length &&
                 categories.map((category, i) => (
@@ -148,7 +281,7 @@ const list = () => {
                       })
                     }
                     key={i}
-                    value={category.name}
+                    value={category}
                     className="text-lg mb-1"
                   >
                     {category.Name}
@@ -351,15 +484,15 @@ const list = () => {
                     name="reservePrice"
                     id="reservePrice"
                     placeholder=" "
+                    value={form.ReservePrice}
+                    onChange={(e) =>
+                      setForm({ ...form, ReservePrice: e.target.value })
+                    }
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   />
                   <label
                     htmlFor="reservePrice"
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    value={form.ReservePrice}
-                    onChange={(e) =>
-                      setForm({ ...form, ReservePrice: e.target.value })
-                    }
                   >
                     Reserve Price
                   </label>
@@ -372,15 +505,15 @@ const list = () => {
                 name="buynowPrice"
                 id="buynowPrice"
                 placeholder=" "
+                value={form.BuyNowPrice}
+                onChange={(e) =>
+                  setForm({ ...form, BuyNowPrice: e.target.value })
+                }
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               />
               <label
                 htmlFor="buynowPrice"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                value={form.BuyNowPrice}
-                onChange={(e) =>
-                  setForm({ ...form, BuyNowPrice: e.target.value })
-                }
               >
                 Buy Now
               </label>
@@ -552,7 +685,26 @@ const list = () => {
             ></textarea>
           </div>
         </div>
-
+        <div className="mt-4 border-t-2">
+          <div className="flex justify-evenly mt-2  flex-wrap">
+            {attributes.length &&
+              attributes.map(
+                (attribute, i) =>
+                  (attribute.IsRequiredForSell ||
+                    attribute.Options ||
+                    attribute.Range ||
+                    attribute.Name === "NumberPlate") && (
+                    <div key={i} className="block w-2/5 mt-4">
+                      <AttributeForm
+                        attribute={attribute}
+                        type={attribute.Type}
+                        keyName={i}
+                      />
+                    </div>
+                  )
+              )}
+          </div>
+        </div>
         <div className=" text-right mt-6">
           <button
             type="button"

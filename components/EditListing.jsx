@@ -62,6 +62,8 @@ const EditListing = ({ category: category, data: data }) => {
                 key === "PhotoIds" ||
                 key === "PromotionId" ||
                 key === "Photos" ||
+                key === "Attributes" ||
+                key === "ImmutableFields" ||
                 key === "ShippingOptions" //this should be handled later
               ) {
                 return "";

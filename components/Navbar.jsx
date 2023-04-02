@@ -69,7 +69,7 @@ const Navbar = () => {
     } else {
       setIsAuth(false);
     }
-  }, [user.oauth_token]);
+  }, [user.token_secret]);  
 
   return (
     <Disclosure as="nav" className="bg-gray-800">

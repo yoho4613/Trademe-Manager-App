@@ -547,9 +547,9 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
   Title: "ABC",
   // Subtitle: "ABC",
   Description: [""],
-  StartPrice: 123.0,
-  ReservePrice: 123.0,
-  BuyNowPrice: 123.0,
+  StartPrice: 0,
+  ReservePrice: 0,
+  BuyNowPrice: 0,
   Duration: 7,
   // EndDateTime: "/Date(1514764800)/",
   Pickup: 3,
@@ -652,82 +652,7 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
     },
   ],
   PaymentMethods: [1, 2],
-  // Attributes: [
-  //   {
-  //     Name: "ABC",
-  //     DisplayName: "ABC",
-  //     Value: "ABC",
-  //     Type: 0,
-  //     Range: {
-  //       Lower: "ABC",
-  //       Upper: "ABC",
-  //     },
-  //     MaxStringLength: 123,
-  //     Options: [
-  //       {
-  //         Value: "ABC",
-  //         Display: "ABC",
-  //         Count: 123,
-  //       },
-  //       {
-  //         Value: "ABC",
-  //         Display: "ABC",
-  //         Count: 123,
-  //       },
-  //     ],
-  //     Units: [
-  //       {
-  //         Display: "ABC",
-  //         Multiplier: 123.0,
-  //       },
-  //       {
-  //         Display: "ABC",
-  //         Multiplier: 123.0,
-  //       },
-  //     ],
-  //     Unit: "ABC",
-  //     IsRequiredForSell: false,
-  //     GroupName: "ABC",
-  //     DisplayValue: "ABC",
-  //   },
-  //   {
-  //     Name: "ABC",
-  //     DisplayName: "ABC",
-  //     Value: "ABC",
-  //     Type: 0,
-  //     Range: {
-  //       Lower: "ABC",
-  //       Upper: "ABC",
-  //     },
-  //     MaxStringLength: 123,
-  //     Options: [
-  //       {
-  //         Value: "ABC",
-  //         Display: "ABC",
-  //         Count: 123,
-  //       },
-  //       {
-  //         Value: "ABC",
-  //         Display: "ABC",
-  //         Count: 123,
-  //       },
-  //     ],
-  //     Units: [
-  //       {
-  //         Display: "ABC",
-  //         Multiplier: 123.0,
-  //       },
-  //       {
-  //         Display: "ABC",
-  //         Multiplier: 123.0,
-  //       },
-  //     ],
-  //     Unit: "ABC",
-  //     IsRequiredForSell: false,
-  //     GroupName: "ABC",
-  //     DisplayValue: "ABC",
-  //   },
-  // ],
+  Attributes: [],
   // IsClearance: false,
   // ExternalReferenceId: "ABC",
   // Contacts: [
