@@ -4,10 +4,10 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 import assets from "../assets";
 import { BASE_PAGE_SLUG } from "../constant/config";
 import { toast } from "react-toastify";
+import { Image } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
