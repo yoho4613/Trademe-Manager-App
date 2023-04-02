@@ -5,7 +5,7 @@ import { useStateContext } from "../context/StateContext";
 import assets from "../assets";
 import Image from "next/image";
 
-const profile = () => {
+const Profile = () => {
   const { user, fetchData, notifyError } = useStateContext();
   const [profile, setProfile] = useState({});
   const [member, setMember] = useState({});
@@ -99,4 +99,4 @@ const profile = () => {
   );
 };
 
-export default profile;
+export default Profile;
