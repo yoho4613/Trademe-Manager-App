@@ -81,7 +81,7 @@ const Profile = () => {
                     Address Verified
                   </p>
                 ) : (
-                  <p>Address is not verified"</p>
+                  <p>Address is not verified</p>
                 )}
                 <p>{profile.ClosestLocality}</p>
               </div>

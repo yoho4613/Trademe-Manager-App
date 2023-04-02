@@ -3,7 +3,7 @@ require("dotenv").config()
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["images.tmsandbox.co.nz"],
+    domains: ["images.tmsandbox.co.nz",],
   },
   env: {
     DB_HOST: process.env.DB_HOST,
