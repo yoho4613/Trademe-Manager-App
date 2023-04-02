@@ -1,7 +1,7 @@
 export const BASE_URL = "https://api.trademe.co.nz/v1";
 export const BASE_URL_SECURE = "https://secure.trademe.co.nz";
 export const BASE_PAGE_SLUG = "/a";
-export const HOSTING_URL = "https://localhost:3001";
+export const HOSTING_URL = "https://trademe-manager.netlify.app";
 export const navigation = [
   { slug: "list", name: "List an Item", href: `/list`, current: false },
   {
