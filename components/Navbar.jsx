@@ -7,7 +7,7 @@ import Link from "next/link";
 import assets from "../assets";
 import { BASE_PAGE_SLUG } from "../constant/config";
 import { toast } from "react-toastify";
-import { Image } from "react";
+import Image from "next/image";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
