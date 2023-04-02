@@ -7,18 +7,20 @@ import Link from "next/link";
 import Image from "next/image";
 import assets from "../assets";
 import { BASE_PAGE_SLUG } from "../constant/config";
+import { toast } from "react-toastify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export const navigation = [
+  { slug: "home", name: "Home", href: `/`, current: true },
   { slug: "list", name: "List an Item", href: `/list`, current: false },
   {
     slug: "selling",
     name: "Items I'm Selling",
     href: `${BASE_PAGE_SLUG}/selling`,
-    current: true,
+    current: false,
     url: "/MyTradeMe/SellingItems/All.json",
   },
   {
@@ -49,19 +51,31 @@ const Navbar = () => {
   const { user, setUser, navBar, setNavBar } = useStateContext();
   const router = useRouter();
 
-
   useEffect(() => {
-    navigation.find((el) => el.current).current = false;
+    console.log(router.pathname);
+    const prevPage = navigation.find((el) => el.current);
+    if (prevPage) {
+      prevPage.current = false;
+    }
+
     if (router.query.slug) {
       if (navigation.find((el) => el.slug === router.query.slug)) {
         navigation.find((el) => el.slug === router.query.slug).current = true;
       } else {
         router.push("/");
       }
+    } else if (router.pathname === "/list") {
+      navigation.find((el) => el.slug === "list").current = true;
+    } else if (router.pathname === "/") {
+      console.log(router.pathname, "home");
+      navigation.find((el) => el.slug === "home").current = true;
     }
-  }, []);
 
-  
+    if (isAuth && router.pathname === "/login") {
+      router.push("/");
+      toast.info("You are logged in");
+    }
+  }, [router.pathname]);
 
   useEffect(() => {
     if (user.oauth_token && user.token_secret) {
@@ -69,7 +83,7 @@ const Navbar = () => {
     } else {
       setIsAuth(false);
     }
-  }, [user.token_secret]);  
+  }, [user.token_secret]);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">

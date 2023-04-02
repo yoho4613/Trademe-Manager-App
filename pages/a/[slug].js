@@ -12,7 +12,7 @@ const MenuPage = ({ params }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
+    if (localStorage.getItem("user") === null) {
       router.push("/login");
     }
   }, []);

@@ -17,37 +17,6 @@ export const StateContext = ({ children }) => {
     oauth_token: "",
     token_secret: "",
   });
-  const [navBar, setNavBar] = useState([
-    { slug: "list", name: "List an Item", href: `/list`, current: false },
-    {
-      slug: "selling",
-      name: "Items I'm Selling",
-      href: `${BASE_PAGE_SLUG}/selling`,
-      current: true,
-      url: "/MyTradeMe/SellingItems/All.json",
-    },
-    {
-      slug: "watchlist",
-      name: "Watchlist",
-      href: `${BASE_PAGE_SLUG}/watchlist`,
-      current: false,
-      url: "/MyTradeMe/Watchlist/All.json",
-    },
-    {
-      slug: "sold",
-      name: "Sold Item",
-      href: `${BASE_PAGE_SLUG}/sold`,
-      current: false,
-      url: "/MyTradeMe/SoldItems/Last45Days.json",
-    },
-    {
-      slug: "unsold",
-      name: "Unsold Item",
-      href: `${BASE_PAGE_SLUG}/unsold`,
-      current: false,
-      url: "/MyTradeMe/UnsoldItems/ItemsICanRelist.json",
-    },
-  ]);
 
   const notifyError = () =>
     toast.error(`There was an error. Refresh the page or try later`);
@@ -153,8 +122,6 @@ export const StateContext = ({ children }) => {
         setIsLoading,
         removeWatchlist,
         notifyError,
-        navBar,
-        setNavBar
       }}
     >
       {children}
