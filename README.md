@@ -17,9 +17,9 @@ It uses Trademe API
 <h2>How to create consumer & consumer secrect key </h2>
 1. visit https://www.tmsandbox.co.nz/MyTradeMe/Api/DeveloperOptions.aspx <br />
 2. create new API key by clicking `Register a new application` <br />
-3. put Callback Domains as `hosting domain/login` or `localhost/login`
-4. Create API
-5. use consumer key and consumer secret key to login
+3. put Callback Domains as `hosting domain/login` or `localhost/login` <br />
+4. Create API <br />
+5. use consumer key and consumer secret key to login <br />
 
 <h2>How To Use</h2>
 
