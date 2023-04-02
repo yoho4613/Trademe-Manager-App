@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useStateContext } from "../context/StateContext";
+import { BASE_URL_SECURE } from "../constant/config";
 
 function Login(props) {
   const [userId, setUserId] = useState("");
@@ -74,7 +75,7 @@ function Login(props) {
     localStorage.setItem("user", JSON.stringify(user));
 
     router.push(
-      `https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=${token}`
+      `${BASE_URL_SECURE}/Oauth/Authorize?oauth_token=${token}`
     );
   };
 
