@@ -32,7 +32,6 @@ use the development branch for develop purpose
 or
 replace the `constant/config.js` `BASE_URL` && `BASE_URL_SECURE` to `https://api.tmsandbox.co.nz/v1` && `https://secure.tmsandbox.co.nz` 
 tmsandbox(dev server) 
-`npm install`
 
 
 1. copy the code and clone
