@@ -17,10 +17,10 @@ function Login(props) {
   let oauth_verifier;
 
   useEffect(() => {
-    if(user.oauth_token && user.token_secret) {
-      router.push('/')
+    if (user.oauth_token && user.token_secret) {
+      router.push("/");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (user.token) {
@@ -54,6 +54,11 @@ function Login(props) {
 
       const oauth_token = result.data.slice(12, 44);
       const oauth_tokenSecret = result.data.slice(64, 96);
+      setUser({
+        ...user,
+        oauth_token: oauth_token,
+        token_secret: oauth_tokenSecret,
+      });
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -74,9 +79,7 @@ function Login(props) {
   const sendToken = async (token) => {
     localStorage.setItem("user", JSON.stringify(user));
 
-    router.push(
-      `${BASE_URL_SECURE}/Oauth/Authorize?oauth_token=${token}`
-    );
+    router.push(`${BASE_URL_SECURE}/Oauth/Authorize?oauth_token=${token}`);
   };
 
   const fetchAPI = async (e) => {
