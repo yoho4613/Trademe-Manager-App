@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (
-        !user.token_secret.length &&
+        // !user.token_secret.length &&
         JSON.parse(localStorage?.getItem("user"))?.oauth_token?.length
       ) {
         setUser(JSON.parse(localStorage.getItem("user")));

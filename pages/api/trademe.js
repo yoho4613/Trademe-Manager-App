@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL_SECURE } from "../../constant/config";
+import { HOSTING_URL } from "../../constant/config";
 
 export default async function handler(req, res) {
   try {
@@ -11,7 +12,7 @@ export default async function handler(req, res) {
         scope: "MyTradeMeRead,MyTradeMeWrite",
       },
       headers: {
-        Authorization: `OAuth 0auth_callback=https://developer.trademe.co.nz/,oauth_consumer_key=${consumer},oauth_signature_method=PLAINTEXT,oauth_signature=${secret}&`,
+        Authorization: `OAuth 0auth_callback=${HOSTING_URL},oauth_consumer_key=${consumer},oauth_signature_method=PLAINTEXT,oauth_signature=${secret}&`,
       },
     };
 

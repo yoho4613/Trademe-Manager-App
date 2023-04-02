@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useStateContext } from "../context/StateContext";
+import { BASE_URL_SECURE } from "../constant/config";
 
 function Login(props) {
   const [userId, setUserId] = useState("");
@@ -16,10 +17,10 @@ function Login(props) {
   let oauth_verifier;
 
   useEffect(() => {
-    if(user.oauth_token && user.token_secret) {
-      router.push('/')
+    if (user.oauth_token && user.token_secret) {
+      router.push("/");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (user.token) {
@@ -61,6 +62,11 @@ function Login(props) {
           token_secret: oauth_tokenSecret,
         })
       );
+      setUser({
+        ...user,
+        oauth_token: oauth_token,
+        token_secret: oauth_tokenSecret,
+      });
       router.push("/");
       return result;
     } catch (error) {
@@ -73,9 +79,7 @@ function Login(props) {
   const sendToken = async (token) => {
     localStorage.setItem("user", JSON.stringify(user));
 
-    router.push(
-      `https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=${token}`
-    );
+    router.push(`${BASE_URL_SECURE}/Oauth/Authorize?oauth_token=${token}`);
   };
 
   const fetchAPI = async (e) => {

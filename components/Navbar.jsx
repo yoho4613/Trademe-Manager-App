@@ -83,6 +83,8 @@ const Navbar = () => {
     } else {
       setIsAuth(false);
     }
+    console.log(user)
+    console.log(isAuth)
   }, [user.token_secret]);
 
   return (
@@ -218,8 +220,13 @@ const Navbar = () => {
                                   setIsAuth(false);
                                   localStorage.clear();
                                   setUser({
+                                    consumer: "",
+                                    consumerSecret: "",
                                     token: "",
                                     tokenSecret: "",
+                                    verifier: "",
+                                    oauth_token: "",
+                                    token_secret: "",
                                   });
                                   router.push("/");
                                 }}
