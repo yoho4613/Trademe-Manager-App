@@ -1,4 +1,6 @@
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import VimeoPlayer from "react-player/vimeo";
@@ -46,8 +48,10 @@ const Landing = () => {
     //   .then((res) => toast.success("Successfully added!"))
     //   .catch((err) => notifyError());
 
-    if(!name.length && !email.length) {
-      return toast.error("Missing information. Please check your Name and Email address")
+    if (!name.length && !email.length) {
+      return toast.error(
+        "Missing information. Please check your Name and Email address"
+      );
     }
     axios
       .post("/api/send-email", {
@@ -125,7 +129,7 @@ const Landing = () => {
                   The best tool for TradeMe NZ <br />
                   <span>for your convenience</span>
                 </h1>
-                <a
+                <Link
                   type="button"
                   href="/login"
                   className="inline-block px-7 py-3 border-2 border-white text-white font-medium text-sm leading-snug uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
@@ -133,7 +137,7 @@ const Landing = () => {
                   data-mdb-ripple-color="light"
                 >
                   Get started
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -219,7 +223,7 @@ const Landing = () => {
         <div className="block rounded-lg shadow-lg bg-white">
           <div className="flex flex-wrap items-center">
             <div className="grow-0 shrink-0 basis-auto block w-full lg:flex lg:w-6/12 xl:w-4/12">
-              <img
+              <Image
                 src="https://mdbootstrap.com/img/new/ecommerce/vertical/012.jpg"
                 alt="Trendy Pants and Shoes"
                 className="w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"

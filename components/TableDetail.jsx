@@ -1,4 +1,4 @@
-import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -245,7 +245,7 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                     <td className="px-2 py-4">{item.PriceDisplay}</td>
                     <td className="px-2 py-4">
                       {item.PictureHref ? (
-                        <img src={item.PictureHref} />
+                        <Image src={item.PictureHref} />
                       ) : (
                         "No Image"
                       )}

@@ -1,7 +1,8 @@
 import React from "react";
-import Head from "next/head";
-import { Email, Item, Span, A } from "react-html-email";
+
+import { Email, Item, Span } from "react-html-email";
 import { HOSTING_URL } from "./config";
+import Link from "next/link";
 
 const Emailer = ({ name }) => {
   const styles = {
@@ -38,16 +39,21 @@ const Emailer = ({ name }) => {
   };
 
   return (
-    <Email style={{ backgroundColor: "#F6F6F6" }} title="Welcome to TradeMe-Manager">
+    <Email
+      style={{ backgroundColor: "#F6F6F6" }}
+      title="Welcome to TradeMe-Manager"
+    >
       <Item align="center">
         <h1 style={styles.h1}>Dear {name},</h1>
       </Item>
-      <Item align="center">
-        <p style={styles.p}>
-          Thank you for subscribing to TradeMe-Manager. We are excited to have you
-          join our community!
-        </p>
-      </Item>
+      <Span>
+        <Item align="center">
+          <p style={styles.p}>
+            Thank you for subscribing to TradeMe-Manager. We are excited to have
+            you join our community!
+          </p>
+        </Item>
+      </Span>
       <Item align="center">
         <p style={styles.p}>
           As a subscriber, you will receive the latest updates, news, and
@@ -55,9 +61,9 @@ const Emailer = ({ name }) => {
         </p>
       </Item>
       <Item align="center">
-        <a href={HOSTING_URL} style={styles.btn}>
+        <Link href={HOSTING_URL} style={styles.btn}>
           Click here
-        </a>
+        </Link>
         <p style={styles.p}>to learn more about our products and services.</p>
       </Item>
       <Item align="center">

@@ -87,7 +87,7 @@ const ListingDetail = ({ data: data, category: category }) => {
                       </svg>
                     </button>
                     {list.Photos && (
-                      <img
+                      <Image
                         className="object-contain w-full lg:h-full"
                         src={photos[currentImg]}
                         alt=""
@@ -129,7 +129,7 @@ const ListingDetail = ({ data: data, category: category }) => {
                             currentImg === i && "border-red-400"
                           } block border border-gray-200 hover:border-red-400 dark:border-gray-700 dark:hover:border-red-300`}
                         >
-                          <img
+                          <Image
                             className="object-contain w-full lg:h-28"
                             src={photo}
                             alt=""
