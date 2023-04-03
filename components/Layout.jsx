@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -10,9 +10,51 @@ import { useRouter } from "next/router";
 import { navigation } from "../constant/config";
 
 const Layout = ({ children }) => {
-  const { user, setUser, isLoading } = useStateContext();
+  const { setUser, isLoading, navBar, setNavBar } = useStateContext();
   const router = useRouter();
   const alanBtnContainer = useRef();
+
+  useEffect(() => {
+    console.log(router.pathname);
+    console.log(router.query);
+
+    setNavBar((prev) =>
+      prev.map((nav) => (nav.current ? { ...nav, current: false } : nav))
+    );
+
+    if (router.query.slug) {
+      console.log(`is ${router.query.slug} ${router.query.slug}`);
+      setNavBar((prev) =>
+        prev.map((nav) =>
+          nav.slug === router.query.slug ? { ...nav, current: true } : nav
+        )
+      );
+    } else if (router.pathname === "/list") {
+      console.log("is list", router.pathname);
+      setNavBar((prev) =>
+        prev.map((nav) =>
+          nav.slug === "list" ? { ...nav, current: true } : nav
+        )
+      );
+    } else if (router.pathname === "/") {
+      console.log("is home", router.pathname);
+      setNavBar((prev) =>
+        prev.map((nav) =>
+          nav.slug === "home" ? { ...nav, current: true } : nav
+        )
+      );
+    }
+
+    if (typeof window !== undefined) {
+      if (
+        localStorage.getItem("user") !== null &&
+        router.pathname === "/login"
+      ) {
+        router.push("/");
+        toast.info("You are logged in");
+      }
+    }
+  }, [router.pathname, router.query]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -96,7 +138,7 @@ const Layout = ({ children }) => {
             ({ name }) => name.toLowerCase() === pageName.toLowerCase()
           );
           if (foundMenu) {
-            router.push(`/${foundMenu.url}`);
+            router.push(`/${foundMenu.href}`);
           } else {
             alan.playText(
               `Sorry I could not find that page name of ${pageName}. Please try other name.`

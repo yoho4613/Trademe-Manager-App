@@ -6,82 +6,16 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import assets from "../assets";
-import { BASE_PAGE_SLUG } from "../constant/config";
-import { toast } from "react-toastify";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const navigation = [
-  { slug: "home", name: "Home", href: `/`, current: true },
-  { slug: "list", name: "List an Item", href: `/list`, current: false },
-  {
-    slug: "selling",
-    name: "Items I'm Selling",
-    href: `${BASE_PAGE_SLUG}/selling`,
-    current: false,
-    url: "/MyTradeMe/SellingItems/All.json",
-  },
-  {
-    slug: "watchlist",
-    name: "Watchlist",
-    href: `${BASE_PAGE_SLUG}/watchlist`,
-    current: false,
-    url: "/MyTradeMe/Watchlist/All.json",
-  },
-  {
-    slug: "sold",
-    name: "Sold Item",
-    href: `${BASE_PAGE_SLUG}/sold`,
-    current: false,
-    url: "/MyTradeMe/SoldItems/Last45Days.json",
-  },
-  {
-    slug: "unsold",
-    name: "Unsold Item",
-    href: `${BASE_PAGE_SLUG}/unsold`,
-    current: false,
-    url: "/MyTradeMe/UnsoldItems/ItemsICanRelist.json",
-  },
-];
-
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const { user, setUser, navBar, setNavBar } = useStateContext();
   const router = useRouter();
-  const menu = useRef("home")
-
-  useEffect(() => {
-    console.log(menu)
-    console.log(router.pathname);
-    console.log(router.query.slug);
-    const prevPage = navigation.find((el) => el.current);
-
-    if (prevPage) {
-      prevPage.current = false;
-    }
-
-    if (router.query.slug) {
-      if (navigation.find((el) => el.slug === router.query.slug)) {
-        navigation.find((el) => el.slug === router.query.slug).current = true;
-      }
-    }
-    if (router.pathname === "/list") {
-      navigation.find((el) => el.slug === "list").current = true;
-    }
-
-    if (isAuth && router.pathname === "/login") {
-      router.push("/");
-      toast.info("You are logged in");
-    }
-
-    if (router.pathname === "/") {
-      console.log("router", router.pathname, "query", router.query)
-      navigation.find((el) => el.slug === "home").current = true;
-      menu.current =router.pathname
-    }
-  }, [router.pathname, router.query]);
 
   useEffect(() => {
     if (user.oauth_token && user.token_secret) {
@@ -89,8 +23,7 @@ const Navbar = () => {
     } else {
       setIsAuth(false);
     }
-    console.log(user);
-    console.log(isAuth);
+
   }, [user.token_secret]);
 
   return (
@@ -130,7 +63,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {navBar.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -252,7 +185,7 @@ const Navbar = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              {navigation.map((item) => (
+              {navBar.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
@@ -264,7 +197,6 @@ const Navbar = () => {
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
-                  onClick={(item) => (item.current = true)}
                 >
                   {item.name}
                 </Disclosure.Button>
