@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
       ) {
         setUser(JSON.parse(localStorage.getItem("user")));
       } else {
-        localStorage.clear()
+        localStorage.clear();
       }
     }
   }, []);
@@ -68,14 +68,16 @@ const Layout = ({ children }) => {
   useEffect(() => {
     const alanBtn = require("@alan-ai/alan-sdk-web");
 
-    alanBtn({
+    let alan;
+
+    alan = alanBtn({
       key: "2b2ff89b92b3fe83f2bc358a7062641e2e956eca572e1d8b807a3e2338fdd0dc/stage",
       onCommand: ({ command, pageName }) => {
         if (command === "login") {
           if (localStorage.key("user") === null) {
             router.push("/login");
           } else {
-            alanBtn().playText("You are already logged in");
+            alan.playText("You are already logged in");
           }
         } else if (command === "logout") {
           localStorage.clear();
@@ -90,11 +92,15 @@ const Layout = ({ children }) => {
           });
           router.push("/");
         } else if (command === "page") {
-          const foundMenu = navigation.find(({name}) => name.toLowerCase() === pageName.toLowerCase())
-          if(foundMenu) {
-            router.push(`/${foundMenu.url}`)
+          const foundMenu = navigation.find(
+            ({ name }) => name.toLowerCase() === pageName.toLowerCase()
+          );
+          if (foundMenu) {
+            router.push(`/${foundMenu.url}`);
           } else {
-            alanBtn.playText(`Sorry I could not find that page name of ${pageName}. Please try other name.`)
+            alan.playText(
+              `Sorry I could not find that page name of ${pageName}. Please try other name.`
+            );
           }
         }
       },

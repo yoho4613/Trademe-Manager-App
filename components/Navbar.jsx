@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useStateContext } from "../context/StateContext";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -50,10 +50,14 @@ const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false);
   const { user, setUser, navBar, setNavBar } = useStateContext();
   const router = useRouter();
+  const menu = useRef("home")
 
   useEffect(() => {
+    console.log(menu)
     console.log(router.pathname);
+    console.log(router.query.slug);
     const prevPage = navigation.find((el) => el.current);
+
     if (prevPage) {
       prevPage.current = false;
     }
@@ -61,21 +65,23 @@ const Navbar = () => {
     if (router.query.slug) {
       if (navigation.find((el) => el.slug === router.query.slug)) {
         navigation.find((el) => el.slug === router.query.slug).current = true;
-      } else {
-        router.push("/");
       }
-    } else if (router.pathname === "/list") {
+    }
+    if (router.pathname === "/list") {
       navigation.find((el) => el.slug === "list").current = true;
-    } else if (router.pathname === "/") {
-      console.log(router.pathname, "home");
-      navigation.find((el) => el.slug === "home").current = true;
     }
 
     if (isAuth && router.pathname === "/login") {
       router.push("/");
       toast.info("You are logged in");
     }
-  }, [router.pathname]);
+
+    if (router.pathname === "/") {
+      console.log("router", router.pathname, "query", router.query)
+      navigation.find((el) => el.slug === "home").current = true;
+      menu.current =router.pathname
+    }
+  }, [router.pathname, router.query]);
 
   useEffect(() => {
     if (user.oauth_token && user.token_secret) {
@@ -83,8 +89,8 @@ const Navbar = () => {
     } else {
       setIsAuth(false);
     }
-    console.log(user)
-    console.log(isAuth)
+    console.log(user);
+    console.log(isAuth);
   }, [user.token_secret]);
 
   return (
