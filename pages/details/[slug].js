@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { navigation } from "../../components/Navbar";
+import { navigation } from "../../constant/config"
 // import { Spinner, TableDetail } from "../../components";
 // import { useStateContext } from "../../context/StateContext";
 import { useRouter } from "next/router";

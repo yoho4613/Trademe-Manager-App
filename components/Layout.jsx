@@ -4,10 +4,11 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useStateContext } from "../context/StateContext";
 import Spinner from "./Spinner";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { navigation } from "../constant/config";
+
 
 const Layout = ({ children }) => {
   const { setUser, isLoading, navBar, setNavBar } = useStateContext();
@@ -15,29 +16,23 @@ const Layout = ({ children }) => {
   const alanBtnContainer = useRef();
 
   useEffect(() => {
-    console.log(router.pathname);
-    console.log(router.query);
-
     setNavBar((prev) =>
       prev.map((nav) => (nav.current ? { ...nav, current: false } : nav))
     );
 
     if (router.query.slug) {
-      console.log(`is ${router.query.slug} ${router.query.slug}`);
       setNavBar((prev) =>
         prev.map((nav) =>
           nav.slug === router.query.slug ? { ...nav, current: true } : nav
         )
       );
     } else if (router.pathname === "/list") {
-      console.log("is list", router.pathname);
       setNavBar((prev) =>
         prev.map((nav) =>
           nav.slug === "list" ? { ...nav, current: true } : nav
         )
       );
     } else if (router.pathname === "/") {
-      console.log("is home", router.pathname);
       setNavBar((prev) =>
         prev.map((nav) =>
           nav.slug === "home" ? { ...nav, current: true } : nav
@@ -144,8 +139,8 @@ const Layout = ({ children }) => {
               `Sorry I could not find that page name of ${pageName}. Please try other name.`
             );
           }
-        } else if(command === "jiho") {
-          router.push("https://github.com/yoho4613?tab=repositories")
+        } else if (command === "jiho") {
+          router.push("https://github.com/yoho4613?tab=repositories");
         }
       },
       rootEl: document.getElementById("alan-btn"),
