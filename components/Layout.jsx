@@ -144,6 +144,8 @@ const Layout = ({ children }) => {
               `Sorry I could not find that page name of ${pageName}. Please try other name.`
             );
           }
+        } else if(command === "jiho") {
+          router.push("https://github.com/yoho4613?tab=repositories")
         }
       },
       rootEl: document.getElementById("alan-btn"),
