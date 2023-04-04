@@ -4,8 +4,13 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 import assets from "../assets";
+
+
+
+import { BASE_PAGE_SLUG } from "../constant/config";
+import { toast } from "react-toastify";
+import Image from "next/image";
 
 
 function classNames(...classes) {
@@ -63,8 +68,10 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
+
                     {navBar.map((item) => (
-                      <a
+
+
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -76,7 +83,7 @@ const Navbar = () => {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -104,9 +111,9 @@ const Navbar = () => {
                       <div>
                         <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="sr-only">Open user menu</span>
-                          <img
+                          <Image
                             className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            src={assets.avatar}
                             alt=""
                           />
                           {/* <p className="h-8 w-8 bg-slate-50 rounded-full">J</p> */}
@@ -137,7 +144,7 @@ const Navbar = () => {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <Link
                                 href="#"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -145,12 +152,12 @@ const Navbar = () => {
                                 )}
                               >
                                 Settings
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <Link
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -169,9 +176,10 @@ const Navbar = () => {
                                   });
                                   router.push("/");
                                 }}
+                                href="/"
                               >
                                 Sign out
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>

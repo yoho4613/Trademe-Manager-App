@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1>TradeMe-Manager App</h1>
 
-## Getting Started
+<h2>About App</h2>
+This is Trademe Manager App.
+It uses Trademe API 
 
-First, run the development server:
+<h2>Feafures</h2>
+1. Login with cunsumer key <br />
+2. Create a listing <br />
+3. Edit listing <br />
+4. Current Selling list <br />
+5. Current Watchlist <br />
+6. Unsold Item list <br />
+7. Sold item list <br />
+8. Profile  <br />
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<h2>How to create consumer & consumer secrect key </h2>
+1. visit https://www.tmsandbox.co.nz/MyTradeMe/Api/DeveloperOptions.aspx <br />
+2. create new API key by clicking `Register a new application` <br />
+3. put Callback Domains as `hosting domain/login` or `localhost/login` <br />
+4. Create API <br />
+5. use consumer key and consumer secret key to login <br />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<h2>How To Use</h2>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Login with your API consumer key and consumer secret key. 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Manage your trademe listing
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<h2>Development</h2>
+use the development branch for develop purpose 
+or
+replace the `constant/config.js` `BASE_URL` && `BASE_URL_SECURE` to `https://api.tmsandbox.co.nz/v1` && `https://secure.tmsandbox.co.nz` 
+tmsandbox(dev server) 
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+1. copy the code and clone
+2. `npm install`
+3. create `.env` file
+4. define the variable `NODE_MAILER_PASSWORD`
+6. `npm run dev`
+7. enjoy the App
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

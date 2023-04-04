@@ -5,7 +5,7 @@ import { useStateContext } from "../context/StateContext";
 import assets from "../assets";
 import Image from "next/image";
 
-const profile = () => {
+const Profile = () => {
   const { user, fetchData, notifyError } = useStateContext();
   const [profile, setProfile] = useState({});
   const [member, setMember] = useState({});
@@ -81,7 +81,7 @@ const profile = () => {
                     Address Verified
                   </p>
                 ) : (
-                  <p>Address is not verified"</p>
+                  <p>Address is not verified</p>
                 )}
                 <p>{profile.ClosestLocality}</p>
               </div>
@@ -99,4 +99,4 @@ const profile = () => {
   );
 };
 
-export default profile;
+export default Profile;

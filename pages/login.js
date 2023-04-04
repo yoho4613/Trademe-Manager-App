@@ -55,6 +55,11 @@ function Login(props) {
 
       const oauth_token = result.data.slice(12, 44);
       const oauth_tokenSecret = result.data.slice(64, 96);
+      setUser({
+        ...user,
+        oauth_token: oauth_token,
+        token_secret: oauth_tokenSecret,
+      });
       localStorage.setItem(
         "user",
         JSON.stringify({

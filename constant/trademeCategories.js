@@ -544,7 +544,7 @@ export const GENERAL_ITEM_LISTING_OBJECT = {
 
 export const GENERAL_ITEM_LISTING_FORMAT = {
   // Category: "ABC",
-  Title: "ABC",
+  Title: "",
   // Subtitle: "ABC",
   Description: [""],
   StartPrice: 0,
@@ -932,17 +932,3 @@ export const GENERAL_ITEM_LISTING_FORMAT = {
 };
 
 export const SHIPPING_OPTIONS = {};
-
-const LISTING_EXAMPLE = {
-  Category: "3849",
-  title: "Arty surprise",
-  Description: ["All true art lovers will buy this."],
-  StartPrice: 100,
-  BuyNowPrice: 200,
-  Duration: 7,
-  Pickup: 1,
-  IsBrandNew: true,
-  PhotoIds: [12345678],
-  ShippingOptions: [],
-  PaymentMethod: [1, 2],
-};

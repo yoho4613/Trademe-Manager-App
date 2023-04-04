@@ -20,7 +20,9 @@ const DetailPage = ({ params }) => {
         category === "selling"
           ? `/v1/Selling/Listings/${listId}.json`
           : `/v1/Listings/${listId}.json`;
-      fetchData(api, user, setData).catch(err => toast.error(`There was an error. Refresh the page or try later`));
+      fetchData(api, user, setData).catch((err) =>
+        toast.error(`There was an error. Refresh the page or try later`)
+      );
     }
   }, [listId]);
 
@@ -32,12 +34,12 @@ const DetailPage = ({ params }) => {
   return (
     <div className=" px-6 py-6 ">
       <div className="text-center mt-6">
-     
+
         <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           Here at Flowbite we focus on markets where technology, innovation, and
           capital can unlock long-term value and drive economic growth.
         </p>
-      
+
       </div>
 
       {category === "selling" ? (
