@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { navigation } from "../../components/Navbar";
+import { navigation } from "../../constant/config"
 // import { Spinner, TableDetail } from "../../components";
 // import { useStateContext } from "../../context/StateContext";
 import { useRouter } from "next/router";
@@ -34,10 +34,12 @@ const DetailPage = ({ params }) => {
   return (
     <div className=" px-6 py-6 ">
       <div className="text-center mt-6">
+
         <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           Here at Flowbite we focus on markets where technology, innovation, and
           capital can unlock long-term value and drive economic growth.
         </p>
+
       </div>
 
       {category === "selling" ? (

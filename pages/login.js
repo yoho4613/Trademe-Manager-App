@@ -10,7 +10,7 @@ function Login(props) {
   const [secret, setSecret] = useState("");
   const [isWrong, setIsWrong] = useState(false);
 
-  const { user, setUser } = useStateContext();
+  const { user, setUser, setIsLoading } = useStateContext();
 
   const router = useRouter();
   let localUser;
@@ -50,6 +50,7 @@ function Login(props) {
 
   const fetchUser = async (user) => {
     try {
+      setIsLoading(true)
       const result = await axios.post("/api/accessToken", user);
 
       const oauth_token = result.data.slice(12, 44);
@@ -67,6 +68,12 @@ function Login(props) {
           token_secret: oauth_tokenSecret,
         })
       );
+      setUser({
+        ...user,
+        oauth_token: oauth_token,
+        token_secret: oauth_tokenSecret,
+      });
+      setIsLoading(false)
       router.push("/");
       return result;
     } catch (error) {

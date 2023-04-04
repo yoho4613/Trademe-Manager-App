@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { navigation } from "../../components/Navbar";
+import { navigation } from "../../constant/config";
 import { Spinner, TableDetail } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 const MenuPage = ({ params }) => {
-  const { user, fetchData } = useStateContext();
-  const [nav, setNav] = useState(navigation.find((menu) => menu.current));
+  const { user, fetchData, navBar, setNavBar } = useStateContext();
+  const [nav, setNav] = useState(navBar.find((menu) => menu.current));
   const [data, setData] = useState({});
+  const [isFailedFetch, setIsFailedFetch] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,20 +19,24 @@ const MenuPage = ({ params }) => {
   }, []);
 
   useEffect(() => {
-    if (user.token_secret.length) {
-      fetchData(nav?.url, user, setData).then(res => console.log(res))
-      .catch((err) =>
-        toast.error(`There was an error. Refresh the page or try later`)
-      );
+    if (!Object.keys(data).length) {
+      if (user.token_secret.length && !isFailedFetch) {
+        fetchData(nav?.url, user, setData)
+          .then((res) => console.log(res))
+          .catch((err) => {
+            setIsFailedFetch(true);
+            toast.error(`There was an error. Refresh the page or try later`);
+          });
+      }
     }
   }, [user.token_secret, nav]);
 
   useEffect(() => {
     setNav(
-      navigation.find((menu) => menu.current) ||
-        navigation.find((menu) => menu.slug === router.query.slug)
+      navBar.find((menu) => menu.slug === router.query.slug) ||
+        navBar.find((menu) => menu.current)
     );
-  }, [navigation]);
+  }, [navBar]);
 
   return (
     <div className=" px-6 py-6">
