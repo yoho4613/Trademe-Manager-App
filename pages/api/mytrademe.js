@@ -3,7 +3,6 @@ import { BASE_URL } from "../../constant/config";
 import crypto from "crypto";
 
 export default async function handler(req, res) {
-
   try {
     const consumerKey = req.body.consumer;
     const oauthToken = req.body.oauth_token;
@@ -57,16 +56,11 @@ export default async function handler(req, res) {
       .concat(`oauth_signature="${encodeURIComponent(oauthSignature)}"`)
       .join(", ")}`;
 
-
-    const result = await axios
-      .request(options)
-      .then((res) => res)
-      .catch((err) => console.log(err));
-
+    const result = await axios.request(options);
     res.status(200).json(result.data);
   } catch (error) {
-    console.log(error);
+    console.log(error.message)
     console.log("it is error by server");
-    res.status(400).json(error.message)
+    res.status(400).json(error.message);
   }
 }

@@ -10,6 +10,7 @@ const MenuPage = ({ params }) => {
   const [nav, setNav] = useState(navBar.find((menu) => menu.current));
   const [data, setData] = useState({});
   const [isFailedFetch, setIsFailedFetch] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,15 +28,16 @@ const MenuPage = ({ params }) => {
   // [user.token_secret, nav]);
 
   useEffect(() => {
-    if (user.token_secret.length && !isFailedFetch) {
+
+    if (user.token_secret.length && router.query.slug) {
       fetchData(nav?.url, user, setData)
         .then((res) => console.log(res))
         .catch((err) => {
-          setIsFailedFetch(true);
+          console.log(err.message)
           toast.error(`There was an error. Refresh the page or try later`);
         });
     }
-  }, [nav, router.pathname]);
+  }, [nav, router.query.slug]);
 
   useEffect(() => {
     setNav(
