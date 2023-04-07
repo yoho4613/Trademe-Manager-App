@@ -71,7 +71,7 @@ const Navbar = () => {
 
                     {navBar.map((item) => (
 
-
+                        <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(

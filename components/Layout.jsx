@@ -16,6 +16,7 @@ const Layout = ({ children }) => {
   const alanBtnContainer = useRef();
 
   useEffect(() => {
+    console.log(router.query)
     setNavBar((prev) =>
       prev.map((nav) => (nav.current ? { ...nav, current: false } : nav))
     );
