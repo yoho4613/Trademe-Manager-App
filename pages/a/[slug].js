@@ -19,17 +19,23 @@ const MenuPage = ({ params }) => {
   }, []);
 
   useEffect(() => {
-    if (!Object.keys(data).length) {
-      if (user.token_secret.length && !isFailedFetch) {
-        fetchData(nav?.url, user, setData)
-          .then((res) => console.log(res))
-          .catch((err) => {
-            setIsFailedFetch(true);
-            toast.error(`There was an error. Refresh the page or try later`);
-          });
-      }
+    setNav(
+      navBar.find((menu) => menu.slug === router.query.slug) ||
+        navBar.find((menu) => menu.current)
+    );
+  }, [router.pathname, router.query]);
+  // [user.token_secret, nav]);
+
+  useEffect(() => {
+    if (user.token_secret.length && !isFailedFetch) {
+      fetchData(nav?.url, user, setData)
+        .then((res) => console.log(res))
+        .catch((err) => {
+          setIsFailedFetch(true);
+          toast.error(`There was an error. Refresh the page or try later`);
+        });
     }
-  }, [user.token_secret, nav]);
+  }, [nav, router.pathname]);
 
   useEffect(() => {
     setNav(

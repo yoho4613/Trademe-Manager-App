@@ -245,7 +245,7 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                     <td className="px-2 py-4">{item.PriceDisplay}</td>
                     <td className="px-2 py-4">
                       {item.PictureHref ? (
-                        <Image src={item.PictureHref} />
+                        <Image width={100} height={100} src={item.PictureHref} />
                       ) : (
                         "No Image"
                       )}
