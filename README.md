@@ -28,10 +28,7 @@ Login with your API consumer key and consumer secret key.
 Manage your trademe listing
 
 <h2>Development</h2>
-use the development branch for develop purpose 
-or
-replace the `constant/config.js` `BASE_URL` && `BASE_URL_SECURE` to `https://api.tmsandbox.co.nz/v1` && `https://secure.tmsandbox.co.nz` 
-tmsandbox(dev server) 
+This Application is currently only working on DevServer(tmsandbox.co.nz) only.
 
 
 1. copy the code and clone
@@ -40,4 +37,8 @@ tmsandbox(dev server)
 4. define the variable `NODE_MAILER_PASSWORD`
 6. `npm run dev`
 7. enjoy the App
+
+<h2>Deployment</h2>
+Try <a href="https://trademe-manager.netlify.app/" target="_blank">TradeMe-Manager App Here</a>.
+
 
