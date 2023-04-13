@@ -91,6 +91,8 @@ const ListingDetail = ({ data: data, category: category }) => {
                       <Image
                         className="object-contain w-full lg:h-full"
                         src={photos[currentImg]}
+                        width={100}
+                        height={100}
                         alt=""
                       />
                     )}
@@ -133,6 +135,8 @@ const ListingDetail = ({ data: data, category: category }) => {
                           <Image
                             className="object-contain w-full lg:h-28"
                             src={photo}
+                            width={100}
+                            height={100}
                             alt=""
                           />
                         </button>

@@ -1,7 +1,6 @@
 import connection from "./connection";
 
 export function getAllSubscribers(db = connection) {
-
   return db("subscribers").select();
 }
 

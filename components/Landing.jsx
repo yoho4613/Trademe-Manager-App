@@ -35,7 +35,7 @@ const Landing = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!name.length || !email.length) {
       toast.error("Name or Email input is missing");
@@ -57,7 +57,13 @@ const Landing = () => {
         name,
         email,
       })
-      .then((res) => toast.success("You are successfully subscribed!"))
+      .then((res) => {
+        toast.success("You are successfully subscribed!");
+        axios
+          .post("/api/subscribers", { name, email })
+          .then((res) => console.log(res));
+      })
+
       .catch((err) =>
         toast.error("There was a problem with subscribe. Please try again")
       );

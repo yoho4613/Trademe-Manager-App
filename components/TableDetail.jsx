@@ -245,7 +245,12 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                     <td className="px-2 py-4">{item.PriceDisplay}</td>
                     <td className="px-2 py-4">
                       {item.PictureHref ? (
-                        <Image width={100} height={100} src={item.PictureHref} alt={item.Title} />
+                        <Image
+                          width={100}
+                          height={100}
+                          src={item.PictureHref}
+                          alt={item.Title}
+                        />
                       ) : (
                         "No Image"
                       )}
@@ -258,19 +263,19 @@ const TableDetail = ({ category: category, data: data, url: url }) => {
                     </td>
 
                     <td className="px-2 py-4">
-                      {category === "watchlist" ? (
+                      {category === "selling" ? (
                         <Link
                           href={`/details/${category}?listId=${item.ListingId}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         >
-                          Detail
+                          Edit
                         </Link>
                       ) : (
                         <Link
                           href={`/details/${category}?listId=${item.ListingId}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         >
-                          Edit
+                          Detail
                         </Link>
                       )}
                       {`  `}
